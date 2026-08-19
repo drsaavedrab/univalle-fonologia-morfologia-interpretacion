@@ -1,0 +1,20 @@
+
+# Detecta automáticamente los archivos de texto.
+* text=auto
+
+# Mantiene finales de línea LF entre Windows y Linux.
+*.py   text eol=lf
+*.tex  text eol=lf
+*.bib  text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Identifica explícitamente los formatos binarios.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.pdf  binary
+*.docx binary
+*.xlsx binary

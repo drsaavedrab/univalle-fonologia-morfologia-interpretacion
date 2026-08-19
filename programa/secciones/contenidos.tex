@@ -1,0 +1,83 @@
+
+% ============================================================
+% CONTENIDOS DEL CURSO
+%
+% Esta tabla presenta la estructura conceptual reutilizable.
+% No incluye semanas ni fechas: esos datos pertenecen al
+% cronograma particular de cada edición.
+% ============================================================
+
+% Crea el encabezado numerado de la sección.
+\section{Contenidos del curso}
+
+Presenta aquí la organización conceptual del curso. Las semanas y
+fechas específicas deben permanecer en el cronograma de cada
+edición.
+
+
+% ------------------------------------------------------------
+% CONFIGURACIÓN LOCAL DE LA TABLA
+% ------------------------------------------------------------
+
+% \begingroup limita los ajustes siguientes únicamente a esta
+% tabla. Al llegar a \endgroup, LaTeX recuperará los valores
+% generales del documento.
+\begingroup
+
+% Reduce ligeramente el tamaño del texto de la tabla.
+\small
+
+% Aumenta la altura de las filas.
+\renewcommand{\arraystretch}{1.25}
+
+% Controla el espacio horizontal interno de las celdas.
+\setlength{\tabcolsep}{7pt}
+
+
+% ------------------------------------------------------------
+% TABLA DE CONTENIDOS
+% ------------------------------------------------------------
+
+% tabularx crea una tabla que ocupa todo el ancho del texto.
+%
+% La primera columna:
+% - tiene un ancho fijo del 22 %;
+% - utiliza negrita;
+% - alinea el contenido a la izquierda.
+%
+% La segunda columna:
+% - usa X para ocupar el espacio restante;
+% - alinea el contenido a la izquierda.
+%
+% @{} elimina el espacio automático de los bordes.
+\begin{tabularx}{\textwidth}{@{}
+    >{\bfseries\raggedright\arraybackslash}p{0.22\textwidth}
+    >{\raggedright\arraybackslash}X
+@{}}
+
+% booktabs proporciona líneas horizontales tipográficas.
+\toprule
+
+% & separa las columnas.
+% \\ termina la fila.
+\textbf{Unidad o bloque} & \textbf{Contenidos} \\
+
+% Separa el encabezado del cuerpo de la tabla.
+\midrule
+
+Unidad 1 &
+Incorpora aquí los contenidos de la primera unidad. \\
+
+% Añade espacio vertical sin dibujar otra línea.
+\addlinespace[4pt]
+
+Unidad 2 &
+Incorpora aquí los contenidos de la segunda unidad. \\
+
+% Cierra visualmente la tabla.
+\bottomrule
+
+\end{tabularx}
+
+% Finaliza el grupo de ajustes locales.
+\endgroup

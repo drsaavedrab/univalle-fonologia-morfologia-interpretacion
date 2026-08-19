@@ -1,0 +1,53 @@
+
+% ============================================================
+% EVALUACIÓN
+%
+% Esta sección presenta las actividades evaluativas y sus
+% porcentajes mediante una tabla de dos columnas.
+% ============================================================
+
+% Crea el encabezado numerado de la sección.
+\section{Evaluación}
+
+La evaluación del curso se distribuirá de la siguiente manera:
+
+% tabularx crea una tabla que ocupa todo el ancho del texto.
+%
+% La primera columna X:
+% - utiliza el espacio disponible;
+% - alinea el contenido a la izquierda.
+%
+% La segunda columna:
+% - tiene un ancho fijo;
+% - alinea los porcentajes a la derecha.
+\begin{tabularx}{\textwidth}{@{}
+    >{\raggedright\arraybackslash}X
+    >{\raggedleft\arraybackslash}p{0.18\textwidth}
+@{}}
+
+% \toprule crea la línea superior.
+\toprule
+
+% Encabezados de las columnas.
+\textbf{Actividad} & \textbf{Porcentaje} \\
+
+% \midrule separa el encabezado del contenido.
+\midrule
+
+% \, añade un espacio pequeño antes del signo de porcentaje.
+% \% permite imprimir el carácter especial «%».
+Actividad evaluativa 1 & XX\,\% \\
+
+Actividad evaluativa 2 & XX\,\% \\
+
+Actividad evaluativa 3 & XX\,\% \\
+
+% \bottomrule crea la línea inferior.
+\bottomrule
+
+% Finaliza la tabla.
+\end{tabularx}
+
+% Sustituye XX por valores numéricos y comprueba que el total
+% corresponda al 100 %.
+Los porcentajes deben revisarse y completar el 100\,\%.

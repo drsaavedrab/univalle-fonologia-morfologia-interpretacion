@@ -1,0 +1,157 @@
+
+% !TeX root = ../../../programa/cronograma.tex
+
+% ============================================================
+% CRONOGRAMA DE LA EDICIÓN ACTIVA
+%
+% La primera línea indica a LaTeX Workshop cuál es el documento
+% principal que debe compilar cuando este archivo esté abierto.
+%
+% Este archivo contiene únicamente la tabla específica de una
+% edición. La cabecera, bibliografía y configuración general se
+% encuentran en programa/cronograma.tex.
+% ============================================================
+
+
+% ------------------------------------------------------------
+% CONFIGURACIÓN LOCAL DE LA TABLA
+% ------------------------------------------------------------
+
+% \begingroup limita los ajustes siguientes a esta tabla.
+\begingroup
+
+% Reduce ligeramente el tamaño del texto.
+\small
+
+% Aumenta la altura de las filas.
+\renewcommand{\arraystretch}{1.25}
+
+% Controla la separación horizontal entre columnas.
+\setlength{\tabcolsep}{5pt}
+
+
+% ------------------------------------------------------------
+% ESTRUCTURA DE LA TABLA
+% ------------------------------------------------------------
+
+% longtable permite que la tabla continúe automáticamente
+% en páginas sucesivas.
+%
+% Las cinco columnas corresponden a:
+% semana, sesión, tema, lecturas y actividad.
+%
+% Cada p{...} define un ancho fijo proporcional a \textwidth.
+%
+% \raggedright alinea a la izquierda.
+% \raggedleft alinea a la derecha.
+% \arraybackslash permite utilizar \\ al terminar cada celda.
+% @{} elimina el espacio automático de los bordes.
+\begin{longtable}{@{}
+    >{\raggedright\arraybackslash}p{0.055\textwidth}
+    >{\raggedright\arraybackslash}p{0.055\textwidth}
+    >{\raggedright\arraybackslash}p{0.25\textwidth}
+    >{\raggedright\arraybackslash}p{0.44\textwidth}
+    >{\raggedleft\arraybackslash}p{0.12\textwidth}
+@{}}
+
+
+% ------------------------------------------------------------
+% ENCABEZADO DE LA PRIMERA PÁGINA
+% ------------------------------------------------------------
+
+% \toprule crea la línea superior.
+\toprule
+
+% & separa columnas y \\ termina la fila.
+\textbf{Semana} &
+\textbf{Sesión} &
+\textbf{Tema} &
+\textbf{Lecturas} &
+\textbf{Actividad} \\
+
+% Separa el encabezado del contenido.
+\midrule
+
+% endfirsthead indica que este encabezado solo aparece en la
+% primera página de la tabla.
+\endfirsthead
+
+
+% ------------------------------------------------------------
+% ENCABEZADO DE LAS PÁGINAS POSTERIORES
+% ------------------------------------------------------------
+
+\toprule
+
+\textbf{Semana} &
+\textbf{Sesión} &
+\textbf{Tema} &
+\textbf{Lecturas} &
+\textbf{Actividad} \\
+
+\midrule
+
+% endhead define el encabezado que se repetirá después de cada
+% salto de página.
+\endhead
+
+
+% ------------------------------------------------------------
+% PIE DE LAS PÁGINAS INTERMEDIAS
+% ------------------------------------------------------------
+
+\midrule
+
+% multicolumn combina las cinco columnas en una sola celda.
+% La letra r alinea el aviso a la derecha.
+\multicolumn{5}{r}{
+    \small Continúa en la página siguiente.
+} \\
+
+% endfoot define el pie de las páginas intermedias.
+\endfoot
+
+
+% ------------------------------------------------------------
+% PIE DE LA ÚLTIMA PÁGINA
+% ------------------------------------------------------------
+
+% \bottomrule crea la línea inferior definitiva.
+\bottomrule
+
+% endlastfoot define el pie exclusivo de la última página.
+\endlastfoot
+
+
+% ------------------------------------------------------------
+% FILA MODELO
+% ------------------------------------------------------------
+
+% Duplica y modifica esta estructura para construir el
+% cronograma real.
+%
+% Si una semana contiene dos sesiones, la celda de semana puede
+% dejarse vacía en la segunda fila.
+%
+% \midrule puede utilizarse para separar semanas.
+% \addlinespace[4pt] añade espacio entre sesiones sin dibujar
+% una línea horizontal.
+
+1 &
+I &
+Tema de la sesión.
+&
+Lectura pendiente de definir.
+&
+Actividad prevista.
+\\
+
+
+% ------------------------------------------------------------
+% FIN DE LA TABLA
+% ------------------------------------------------------------
+
+\end{longtable}
+
+% Recupera los valores generales anteriores a \begingroup.
+\endgroup

@@ -1,0 +1,288 @@
+
+% Define el tipo de documento, tamaño de letra y papel.
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================================
+% IDIOMA Y TIPOGRAFÍA
+% ============================================================
+
+% Configura el español, conserva el punto decimal
+% y evita atajos tipográficos que interfieren con biblatex-apa.
+\usepackage[
+    spanish,
+    es-nodecimaldot,
+    es-noshorthands
+]{babel}
+
+% Mejora la codificación de las fuentes.
+\usepackage[T1]{fontenc}
+
+% Fuente Latin Modern.
+\usepackage{lmodern}
+
+% Introduce mejoras tipográficas sutiles.
+\usepackage{microtype}
+
+% Gestiona correctamente las comillas según el idioma del documento.
+\usepackage{csquotes}
+
+% ============================================================
+% PÁGINA, TABLAS & LISTAS
+% ============================================================
+
+% Establece márgenes de 2,5 cm.
+\usepackage[margin=2.5cm]{geometry}
+
+% Permite tablas que ocupan automáticamente el ancho disponible.
+\usepackage{tabularx}
+
+% Añade opciones de alineación para las columnas.
+\usepackage{array}
+
+% Permite controlar la separación y los márgenes de las listas.
+\usepackage{enumitem}
+
+% Proporciona líneas horizontales tipográficamente limpias.
+\usepackage{booktabs}
+
+% Permite crear tablas que continúan automáticamente en páginas sucesivas.
+\usepackage{longtable}
+
+% Permite insertar imágenes.
+\usepackage{graphicx}
+
+% Permite diseñar encabezados y pies de página.
+\usepackage{fancyhdr}
+
+% Permite usar colores.
+\usepackage{xcolor}
+
+% ============================================================
+% CONFIGURACIÓN GENERAL DEL TEXTO
+% ============================================================
+
+% Elimina la sangría al inicio de los párrafos.
+\setlength{\parindent}{0pt}
+
+% Añade separación vertical entre párrafos.
+\setlength{\parskip}{6pt}
+
+% Separación entre el cuerpo del texto y las notas al pie.
+\setlength{\skip\footins}{14pt}
+
+% Separación vertical entre notas al pie consecutivas.
+\setlength{\footnotesep}{12pt}
+
+% ============================================================
+% DATOS DEL CURSO
+% ============================================================
+
+% Incorpora las variables definidas en config/curso.tex.
+
+% Datos generales del curso.
+\input{../config/curso.tex}
+
+% Indica qué edición está activa.
+\input{../config/edicion-activa.tex}
+
+% Incorpora los datos particulares de la edición activa.
+\input{../ediciones/\edicionActiva/semestre.tex}
+
+% ============================================================
+% HEADERS & FOOTERS
+% ============================================================
+
+% Elimina cualquier contenido previo del encabezado y del pie.
+\fancyhf{}
+
+% Encabezado izquierdo:
+% muestra el logo solamente si el archivo existe.
+%
+% \IfFileExists evita que la compilación falle cuando el logo
+% todavía no se ha incorporado al curso.
+\fancyhead[L]{%
+    \IfFileExists{\rutaLogoInstitucional}{%
+        \includegraphics[width=4cm]
+        {\rutaLogoInstitucional}%
+    }{}%
+}
+
+% Encabezado derecho:
+% utiliza el texto definido en config/curso.tex.
+\fancyhead[R]{%
+    \small
+    \color{gray}
+    \encabezadoInstitucional
+}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{58pt}
+
+% Distancia entre el final del texto y la línea base del pie.
+% Un valor menor desplaza el número de página hacia arriba.
+\setlength{\footskip}{15pt}
+\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+
+% ============================================================
+% BIBLIOGRAFÍA
+% ============================================================
+
+% biblatex administra citas y referencias.
+%
+% backend=biber:
+% usa Biber como procesador bibliográfico.
+%
+% style=apa:
+% aplica el estilo APA.
+%
+% sorting=nyt:
+% ordena por nombre, año y título.
+\usepackage[
+    backend=biber,
+    style=apa,
+    sorting=nyt
+]{biblatex}
+
+% Indica dónde está la base de datos bibliográfica.
+\addbibresource{../bibliografia/referencias.bib}
+
+% ============================================================
+% ENLACES
+% ============================================================
+
+% Permite crear enlaces, como el correo electrónico.
+% «hidelinks» evita marcos o colores visibles alrededor del enlace.
+\usepackage[hidelinks]{hyperref}
+
+% ============================================================
+% INICIO DEL DOCUMENTO
+% ============================================================
+
+\begin{document}
+
+% ------------------------------------------------------------
+% CABECERA INSTITUCIONAL
+% ------------------------------------------------------------
+
+\begin{center}
+
+    % \large aumenta ligeramente el tamaño.
+    % \bfseries activa la negrita dentro del grupo { }.
+    {\large\bfseries \institucion}\\
+
+    {\facultad}\\
+    {\departamento}\\[12pt]
+
+    {\Large\bfseries Programa de asignatura}\\[4pt]
+
+    {\LARGE\bfseries \nombreCurso}\\[4pt]
+
+    {\large Periodo académico \periodoAcademico}
+
+\end{center}
+
+% Separación entre la cabecera y la información del curso.
+\vspace{12pt}
+
+% ------------------------------------------------------------
+% INFORMACIÓN ACADÉMICA DEL CURSO
+% ------------------------------------------------------------
+
+% Aumenta la altura de las filas de las tablas.
+\renewcommand{\arraystretch}{1.35}
+
+% Reduce temporalmente el tamaño de la letra.
+\small
+
+% Columnas:
+% 1. Etiqueta fija, negrita, alineada a la izquierda.
+% 2. Valor flexible.
+% 3. Etiqueta fija, negrita, alineada a la izquierda.
+% 4. Valor flexible, alineado a la derecha.
+% @{} elimina los márgenes internos de los extremos.
+\begin{tabularx}{\textwidth}{@{}
+    >{\bfseries\raggedright\arraybackslash}p{0.20\textwidth}
+    X
+    >{\bfseries\raggedright\arraybackslash}p{0.21\textwidth}
+    >{\raggedleft\arraybackslash}X
+@{}}
+
+% & separa columnas.
+% \\ termina cada fila.
+
+Plan de estudios: &
+\planEstudios &
+Asignatura: &
+\nombreCurso \\
+
+Grupo: &
+\grupoCurso &
+Créditos: &
+\creditosCurso \\
+
+Prerrequisitos: &
+\prerrequisitos &
+Código Asignatura: &
+\codigoCurso \\
+
+\end{tabularx}
+
+% Recupera el tamaño normal de la letra.
+\normalsize
+
+% ------------------------------------------------------------
+% INFORMACIÓN DEL DOCENTE Y ATENCIÓN
+% ------------------------------------------------------------
+
+% Añade 8 puntos de separación respecto del contenido anterior.
+\vspace{8pt}
+
+% Inicia una tabla que ocupa todo el ancho disponible.
+% Dos columnas flexibles:
+% izquierda alineada a la izquierda;
+% derecha alineada a la derecha.
+\begin{tabularx}{\textwidth}{
+    >{\raggedright\arraybackslash}X
+    >{\raggedleft\arraybackslash}X
+}
+
+% Primera fila: encabezados de los dos bloques.
+% \textbf aplica negrita.
+% & separa las columnas.
+% \\ termina la fila.
+\textbf{Docente} &
+\textbf{Horario de atención} \\
+
+% Segunda fila: nombre del docente y horario de atención.
+\docenteCurso &
+\horarioAtencion \\
+
+% Tercera fila:
+% \href{destino}{texto visible} crea un enlace.
+% mailto: indica que el destino es una dirección electrónica.
+\href{mailto:\correoDocente}{\correoDocente} &
+\modalidadAtencion
+
+% Finaliza la tabla.
+\end{tabularx}
+
+% ------------------------------------------------------------
+% SECCIONES DEL PROGRAMA
+% ------------------------------------------------------------
+
+% \input inserta aquí el contenido del archivo indicado.
+% La ruta se interpreta desde la ubicación de programa.tex.
+
+\input{secciones/descripcion.tex}
+\input{secciones/objetivos.tex}
+\input{secciones/metodologia.tex}
+\input{secciones/contenidos.tex}
+\input{secciones/evaluacion.tex}
+\input{secciones/bibliografia.tex}
+\input{secciones/politicas.tex}
+
+% ============================================================
+% FIN DEL DOCUMENTO
+% ============================================================
+
+\end{document}

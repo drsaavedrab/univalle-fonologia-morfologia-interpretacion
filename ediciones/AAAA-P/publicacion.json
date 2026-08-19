@@ -1,0 +1,15 @@
+
+{
+  "remoto": "lectures-drive",
+  "publicaciones": [
+    {
+      "nombre": "documentos_generales",
+      "origen": "dist",
+      "destino": "Lectures/INSTITUCION/NOMBRE_CURSO/AAAA-P/00_Documentos_Generales",
+      "archivos": [
+        "programa.pdf",
+        "cronograma.pdf"
+      ]
+    }
+  ]
+}

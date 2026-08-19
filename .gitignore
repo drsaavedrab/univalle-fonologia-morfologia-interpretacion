@@ -1,0 +1,43 @@
+
+# Archivos técnicos generados durante la compilación
+build/*
+!build/.gitkeep
+
+# Entregables generados para publicación
+dist/*
+!dist/.gitkeep
+
+# Archivos temporales de LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+~$*
+
+# Documentos Word locales usados como referencia
+notas/*.docx
+
+# Archivos privados y credenciales
+.env
+.env.*
+!.env.example
+rclone.conf
+credentials.json
+*.credentials.json
+
+# Caché de Python
+__pycache__/
+*.py[cod]
