@@ -6,6 +6,22 @@ Esta guía es para el uso semanal del repositorio una vez iniciado el periodo. E
 
 Edita fuentes, genera salidas y publica entregables. Nunca edites directamente `build/`, `dist/*.pdf` ni archivos que ya estén en Drive.
 
+## El flujo de Git que acompaña el trabajo
+
+Git separa cuatro estados:
+
+```text
+archivos de trabajo → área de preparación → commit local → remoto en GitHub
+      git diff             git add          git commit       git push
+```
+
+- Los **archivos de trabajo** son lo que estás editando en el computador.
+- El **área de preparación** reúne deliberadamente los cambios del próximo commit.
+- Un **commit local** es una instantánea recuperable con una explicación.
+- El **remoto** es la copia compartida o de respaldo en GitHub.
+
+Guardar un archivo en VS Code no equivale a hacer `git add`; hacer `git add` no equivale a crear un commit; y crear un commit no equivale a publicarlo.
+
 ## Mapa rápido: qué se toca
 
 | Necesidad | Archivo o carpeta editable |
@@ -138,6 +154,7 @@ La limpieza real mueve sobrantes a `09_Archivo`; no los destruye.
 git status
 git diff
 git add .
+git status
 git diff --cached
 git diff --cached --stat
 git commit -m "describe el cambio en minúscula"
@@ -145,6 +162,39 @@ git push
 ```
 
 Antes de `git add .`, comprueba que no aparezcan listas, notas, entregas, credenciales ni archivos descargados accidentalmente.
+
+### Lectura paso a paso
+
+1. `git status` clasifica archivos modificados, eliminados, nuevos, preparados y no preparados. Es el primer control de alcance.
+2. `git diff` muestra los cambios de contenido que aún no han pasado por `git add`.
+3. `git add .` prepara todo lo que cuelga de la carpeta actual. Úsalo desde la raíz y solo después de revisar `status`. Si el trabajo es muy concreto, es más seguro indicar las rutas:
+
+   ```bash
+   git add ediciones/2026-2/operacion/estado.toml ediciones/2026-2/bitacora.md
+   ```
+
+4. El segundo `git status` permite comprobar que no preparaste algo ajeno al objetivo.
+5. `git diff --cached` —equivalente a `git diff --staged`— muestra el contenido preparado; `--stat` muestra solo cantidades y nombres.
+6. `git commit -m "..."` crea el registro local. El mensaje debe describir el resultado, no el acto mecánico de editar.
+7. `git push` envía a GitHub los commits que tu rama local tiene por delante de `origin/main`.
+
+### Si preparaste un archivo por error
+
+```bash
+git restore --staged ruta/del/archivo
+```
+
+Esto lo retira del área de preparación, pero conserva tus cambios en el archivo. No uses `git restore ruta/del/archivo` salvo que realmente quieras descartar cambios no confirmados.
+
+### Qué debe contener un commit cotidiano
+
+Un commit debe representar una unidad comprensible. Ejemplos:
+
+- `actualiza estado después de la sesión 3`;
+- `reprograma sesiones por festivo`;
+- `añade lecturas sobre subordinación`.
+
+Si modificaste simultáneamente el estado operativo y una sección estable del programa, puedes crear dos commits añadiendo primero las rutas de un grupo y luego las del otro.
 
 ## Rutina semanal recomendada
 
@@ -190,9 +240,12 @@ python scripts/build.py
 git status
 git diff
 git add .
+git diff --cached --check
 git diff --cached --stat
 git commit -m "actualiza operación del curso"
 git push
 ```
+
+`git diff --cached --check` no muestra normalmente ninguna salida: busca problemas como espacios finales o marcadores de conflicto dentro de lo preparado. Que termine en silencio significa que no encontró esos problemas.
 
 Publica en Drive únicamente cuando haya cambiado un entregable que el estudiantado deba recibir.

@@ -15,15 +15,27 @@ Antes de abrir el siguiente:
 - ejecuta `git status` y deja el repositorio limpio;
 - no renombres ni reemplaces la carpeta anterior.
 
+Antes de copiar, ejecuta:
+
+```bash
+git status
+git log -3 --oneline
+```
+
+`git status` debe indicar que no hay cambios pendientes. Así sabes que el punto de partida puede recuperarse desde el último commit. `git log -3 --oneline` muestra los tres commits más recientes y permite reconocer visualmente dónde termina el periodo anterior.
+
 ## 2. Crear la nueva edición
 
 Como punto de partida, copia la edición anterior completa y luego limpia sus datos operativos. En Git Bash:
 
 ```bash
 cp -R ediciones/2026-2 ediciones/2027-1
+git status --short
 ```
 
 La copia aprovecha la estructura ya validada, pero todavía no está lista para usarse.
+
+`cp -R` es un comando del sistema, no de Git. Por eso la nueva carpeta aparece como no rastreada (`??`) en `git status --short`: existe en el disco, pero Git aún no la ha incorporado a ninguna instantánea.
 
 ## 3. Actualizar los archivos del periodo
 
@@ -66,6 +78,8 @@ Solo cuando su carpeta esté revisada, cambia `config/edicion-activa.tex`:
 
 Este es el interruptor central: programa, cronograma, estado y scripts usarán esa edición.
 
+Conviene activarlo al final, no al comienzo. Mientras preparas la copia, la edición anterior continúa siendo la referencia funcional. Al cambiar el interruptor, Git mostrará tanto la carpeta nueva como la modificación de `config/edicion-activa.tex`, que deben entrar juntas en el commit semestral.
+
 ## 6. Validar y compilar
 
 ```bash
@@ -99,12 +113,35 @@ python scripts/publicar.py --apply
 git status
 git diff
 git add config/edicion-activa.tex ediciones/2027-1
+git status
+git diff --cached
 git diff --cached --stat
 git commit -m "abre edición 2027-1"
 git push
 ```
 
+### Por qué se añaden rutas concretas
+
+Aquí se usa `git add config/edicion-activa.tex ediciones/2027-1`, y no `git add .`, porque el objetivo del commit está claramente delimitado: abrir la edición nueva y activarla. Si existe además una corrección del programa o de la bibliografía, queda fuera de este commit y puede registrarse por separado.
+
+- `git diff` revisa modificaciones todavía no preparadas; la carpeta nueva se identifica inicialmente mediante `git status`.
+- `git add ...` prepara únicamente la nueva edición y su interruptor.
+- `git diff --cached` muestra lo que realmente entrará al commit.
+- `git commit` registra el inicio del periodo en el historial local.
+- `git push` publica los commits locales que todavía no existen en GitHub.
+
 Si además cambiaste componentes estables, es preferible registrarlos en un commit separado para que quede claro qué pertenece al curso y qué pertenece al periodo.
+
+Por ejemplo:
+
+```bash
+git add programa/secciones bibliografia/referencias.bib
+git diff --cached --stat
+git commit -m "actualiza núcleo académico del curso"
+git push
+```
+
+Dos commits separados permiten responder después dos preguntas distintas: «¿qué cambió en el curso?» y «¿qué se configuró para 2027-1?».
 
 ## Comprobación final
 

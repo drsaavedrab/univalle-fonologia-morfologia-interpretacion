@@ -19,12 +19,21 @@ git remote remove origin
 
 `--no-local` crea una copia Git independiente. Al retirar `origin`, el curso nuevo deja de apuntar a la plantilla.
 
+### Qué acaba de ocurrir en Git
+
+- `git clone --no-local ... nombre-del-curso` copia los archivos **y el historial** de la plantilla. El curso nace con una base conocida, pero su trabajo posterior será independiente.
+- `cd nombre-del-curso` entra en el nuevo repositorio. Git solo interpreta los comandos respecto del repositorio en el que estás situado.
+- `git remote remove origin` elimina la conexión con el repositorio remoto de la plantilla. No borra archivos ni commits: únicamente evita que un `push` accidental modifique la plantilla.
+
 Comprueba dónde estás:
 
 ```bash
 pwd
 git status
+git remote -v
 ```
+
+`pwd` confirma la ubicación; `git status` compara los archivos actuales con el último commit; `git remote -v` debe quedar sin resultados hasta que conectes el repositorio propio del curso.
 
 ## 2. Crear la primera edición
 
@@ -33,6 +42,8 @@ Sustituye `2026-2` por el periodo real:
 ```bash
 git mv ediciones/AAAA-P ediciones/2026-2
 ```
+
+Se usa `git mv` porque la carpeta ya pertenece al historial de la plantilla. El comando mueve el contenido y deja preparado para Git que se trata de un cambio de nombre, no de una eliminación accidental seguida de archivos inconexos.
 
 Después cambia en `config/edicion-activa.tex`:
 
@@ -85,6 +96,8 @@ grep -RInE "AAAA-P|INSTITUCIÓN|NOMBRE DEL CURSO|NOMBRE_CURSO|GRUPO|SALÓN|HORAR
 
 Cada coincidencia debe ser intencional o quedar corregida antes de publicar.
 
+Este comando no modifica nada: `grep` solo busca texto. Tampoco es un comando de Git, aunque excluimos `.git` para no revisar el historial interno.
+
 ## 7. Generar y revisar
 
 ```bash
@@ -123,11 +136,30 @@ Crea en GitHub un repositorio vacío con el nombre del curso. Después:
 
 ```bash
 git remote add origin URL-DEL-REPOSITORIO
+git remote -v
+git status
+git diff
 git add .
+git status
+git diff --cached
 git diff --cached --stat
 git commit -m "configura curso y primera edición"
 git push -u origin main
 ```
+
+### Qué hace Git en esta secuencia
+
+1. `git remote add origin ...` conecta el repositorio local con el repositorio vacío de GitHub. `origin` es el nombre convencional de esa conexión.
+2. `git remote -v` permite verificar las direcciones antes de publicar nada.
+3. `git status` muestra archivos modificados, nuevos y eliminados. Aquí sirve para detectar archivos privados o generados que no deban entrar en Git.
+4. `git diff` enseña el contenido modificado que todavía no se ha preparado. Los archivos completamente nuevos aparecen en `status`, pero su contenido aún no aparece en este diff.
+5. `git add .` lleva los cambios revisados al **área de preparación** o *staging area*. Todavía no crea un commit.
+6. El segundo `git status` confirma exactamente qué quedó preparado.
+7. `git diff --cached` muestra el contenido que formará el commit; `--stat` ofrece el resumen por archivo. `--staged` significa lo mismo que `--cached`.
+8. `git commit -m "..."` registra una instantánea local con un mensaje que explica la unidad de cambio.
+9. `git push -u origin main` publica la rama `main` por primera vez y deja configurada su relación con `origin/main`. En adelante bastará con `git push`.
+
+El orden importa: primero se inspecciona, después se prepara, luego se vuelve a inspeccionar y solo entonces se registra y publica.
 
 ## Comprobación final
 
