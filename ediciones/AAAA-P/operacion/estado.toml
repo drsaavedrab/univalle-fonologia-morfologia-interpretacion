@@ -1,0 +1,40 @@
+# ============================================================
+# ESTADO OPERATIVO DEL CURSO
+# ============================================================
+#
+# Registra dónde está realmente el curso. No incluyas nombres,
+# correos, notas ni datos privados de estudiantes.
+# Redacta «situacion» siempre en presente.
+
+[avance]
+
+# Sesión actual o última finalizada. Debe existir en el calendario.
+semana = 1
+sesion = "I"
+
+situacion = """
+El curso está por iniciar.
+"""
+
+[proxima_sesion]
+
+enfoque = """
+Describe aquí, en presente, qué se aborda en la próxima sesión.
+"""
+
+preparacion = [
+  "Indica aquí la preparación requerida para la próxima sesión.",
+]
+
+# Deja la lista vacía cuando no existan otros avisos.
+avisos = []
+
+[comunicacion]
+
+# {curso} se sustituye por el nombre configurado del curso.
+asunto = "{curso} — aviso posterior a clase"
+saludo = "Apreciadas y apreciados estudiantes:"
+
+# Pega la URL de la carpeta compartida. Si queda vacía,
+# el borrador de correo se genera sin este bloque.
+enlace_carpeta = ""

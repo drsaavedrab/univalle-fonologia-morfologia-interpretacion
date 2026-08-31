@@ -1,38 +1,23 @@
+# Programa y documentos públicos
 
-# Programa y cronograma
+Esta carpeta contiene los documentos principales del curso.
 
-Esta carpeta contiene los documentos principales compilables del curso.
+## Documentos
 
-## Documentos principales
+- `programa.tex`: ensambla las secciones estables del programa.
+- `cronograma.tex`: presenta la tabla generada desde los TOML de la edición activa.
+- `estado-del-curso.tex`: presenta la ficha generada desde el estado operativo.
+- `secciones/`: contenido académico estable del programa.
 
-- `programa.tex`: construye el programa de asignatura.
-- `cronograma.tex`: construye el cronograma de la edición activa.
+## Qué se edita
 
-Ambos documentos incorporan:
+El programa se modifica en `secciones/*.tex`. El cronograma y el estado no se rellenan manualmente dentro de sus documentos principales:
 
-- los datos estables definidos en `config/curso.tex`;
-- la edición seleccionada en `config/edicion-activa.tex`;
-- los datos particulares almacenados dentro de `ediciones/`;
-- la bibliografía registrada en `bibliografia/referencias.bib`.
+- cronograma: `ediciones/<periodo>/cronograma/*.toml`;
+- estado: `ediciones/<periodo>/operacion/estado.toml`.
 
-## Secciones del programa
+`scripts/build.py` genera los fragmentos, compila los tres documentos y actualiza `dist/` solo si todo termina correctamente.
 
-La carpeta `secciones/` divide el programa en componentes académicos editables:
+## LaTeX
 
-- descripción;
-- objetivos;
-- metodología;
-- contenidos;
-- evaluación;
-- bibliografía;
-- políticas.
-
-## Compilación
-
-La compilación oficial se ejecuta desde la raíz del repositorio:
-
-```bash
-python scripts/build.py
-```
-
-Los archivos técnicos se guardan en `build/` y los PDF finales en `dist/`.
+Los comentarios incluidos en los `.tex` forman parte del carácter didáctico de la plantilla y conviene conservarlos al adaptar el diseño.

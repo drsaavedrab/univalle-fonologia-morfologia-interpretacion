@@ -1,6 +1,7 @@
 
 # Detecta automáticamente los archivos de texto.
 * text=auto
+.gitattributes text eol=lf
 
 # Mantiene finales de línea LF entre Windows y Linux.
 *.py   text eol=lf
@@ -8,6 +9,7 @@
 *.bib  text eol=lf
 *.md   text eol=lf
 *.json text eol=lf
+*.toml text eol=lf
 *.yml  text eol=lf
 *.yaml text eol=lf
 

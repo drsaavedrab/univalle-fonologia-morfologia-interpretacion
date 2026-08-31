@@ -1,0 +1,15 @@
+Asunto: ${asunto}
+
+${saludo}
+
+${situacion}
+
+${referencia_proxima}
+
+${enfoque}
+
+${bloque_preparacion}
+${bloque_avisos}
+${bloque_carpeta}
+Cordialmente,
+${docente}

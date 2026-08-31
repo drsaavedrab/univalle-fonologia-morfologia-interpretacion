@@ -1,173 +1,170 @@
-
 #!/usr/bin/env python3
+"""Genera y compila todos los documentos públicos del curso."""
 
-"""
-Compila el programa y el cronograma del curso.
-
-Los archivos técnicos producidos por LaTeX se guardan en build/.
-Los PDF finales destinados a publicación se copian a dist/.
-"""
-
+import argparse
+import os
 from pathlib import Path
 import shutil
 import subprocess
-import sys
 
+import cronograma
+import correos
+import estado
 
-# ------------------------------------------------------------
-# RUTAS DEL REPOSITORIO
-# ------------------------------------------------------------
-
-# __file__ representa este archivo: scripts/build.py
-#
-# .resolve() obtiene su ruta absoluta.
-#
-# .parent obtiene scripts/.
-#
-# .parent.parent obtiene la raíz del repositorio.
 REPO_ROOT = Path(__file__).resolve().parent.parent
-
-# Carpeta donde están programa.tex y cronograma.tex.
 PROGRAM_DIR = REPO_ROOT / "programa"
-
-# Carpeta para los archivos técnicos de LaTeX.
 BUILD_DIR = REPO_ROOT / "build"
-
-# Carpeta que contendrá exclusivamente los PDF publicables.
 DIST_DIR = REPO_ROOT / "dist"
+DOCUMENTS = ("programa", "cronograma", "estado-del-curso")
 
 
-# ------------------------------------------------------------
-# DOCUMENTOS QUE SE COMPILARÁN
-# ------------------------------------------------------------
+def parse_arguments() -> argparse.Namespace:
+    """Lee las opciones del flujo local."""
+    parser = argparse.ArgumentParser(
+        description="Genera y compila los documentos públicos del curso."
+    )
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        help="Elimina únicamente los auxiliares de build/ y termina.",
+    )
+    return parser.parse_args()
 
-# Cada nombre corresponde a un archivo .tex dentro de programa/.
-DOCUMENTS = (
-    "programa",
-    "cronograma",
-)
+
+def clean_build() -> None:
+    """Vacía build/ de forma acotada y conserva su .gitkeep."""
+    root = REPO_ROOT.resolve()
+    target = BUILD_DIR.resolve()
+
+    if target.parent != root or target.name != "build":
+        raise SystemExit(f"Error: ruta de limpieza inesperada: {target}")
+
+    if not BUILD_DIR.exists():
+        print("Nada que limpiar: build/ no existe.")
+        return
+
+    if BUILD_DIR.is_symlink() or (
+        hasattr(os.path, "isjunction") and os.path.isjunction(BUILD_DIR)
+    ):
+        raise SystemExit("Error: build/ es un enlace o una unión; no se limpia.")
+
+    targets = [item for item in BUILD_DIR.iterdir() if item.name != ".gitkeep"]
+    if not targets:
+        print("Nada que limpiar: build/ ya está vacío.")
+        return
+
+    print("Se eliminarán únicamente estos auxiliares de build/:")
+    for item in targets:
+        print(f"  - {item.relative_to(REPO_ROOT)}")
+
+    for item in targets:
+        if item.is_symlink() or (
+            hasattr(os.path, "isjunction") and os.path.isjunction(item)
+        ):
+            item.unlink()
+        elif item.is_dir():
+            shutil.rmtree(item)
+        else:
+            item.unlink()
+
+    print("Limpieza local completada; dist/ no fue modificado.")
 
 
 def verify_dependencies() -> None:
-    """Comprueba que latexmk esté disponible en el sistema."""
-
-    # shutil.which busca la aplicación en las rutas del sistema.
+    """Comprueba que LaTeX esté disponible."""
     if shutil.which("latexmk") is None:
-        print(
-            "Error: no se encontró latexmk.\n"
-            "Comprueba que TeX Live esté instalado y disponible "
-            "desde la terminal.",
-            file=sys.stderr,
+        raise SystemExit(
+            "Error: no se encontró latexmk. Comprueba la instalación de TeX Live."
         )
-        raise SystemExit(1)
 
 
 def prepare_directories() -> None:
-    """Crea build/ y dist/ si todavía no existen."""
-
-    # parents=True permite crear carpetas superiores si hiciera falta.
-    #
-    # exist_ok=True evita un error cuando la carpeta ya existe.
+    """Crea las carpetas de salida si todavía no existen."""
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     DIST_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def generate_sources() -> None:
+    """Genera los fragmentos variables de la edición activa."""
+    print("Generando cronograma desde TOML...")
+    cronograma.generar()
+    print("Generando estado operativo...")
+    estado.generar()
+    print("Generando borradores de correo...")
+    correos.generar()
+
+
 def compile_document(document: str) -> Path:
-    """Compila un documento y devuelve la ruta de su PDF."""
-
+    """Compila un documento y devuelve la ruta del PDF producido."""
     source_file = PROGRAM_DIR / f"{document}.tex"
-    generated_pdf = BUILD_DIR / f"{document}.pdf"
-
-    # Verifica que exista el documento fuente antes de compilar.
-    if not source_file.exists():
-        print(
-            f"Error: no existe {source_file}",
-            file=sys.stderr,
-        )
-        raise SystemExit(1)
+    # Cada documento conserva sus auxiliares en un subdirectorio
+    # independiente. Esto evita colisiones y archivos .aux corruptos
+    # al compilar varios documentos consecutivamente en Windows.
+    document_build_dir = BUILD_DIR / document
+    document_build_dir.mkdir(parents=True, exist_ok=True)
+    generated_pdf = document_build_dir / f"{document}.pdf"
+    if not source_file.is_file():
+        raise SystemExit(f"Error: no existe {source_file}")
 
     print(f"Compilando {source_file.name}...")
-
-    # Ejecuta latexmk desde programa/ para conservar correctamente
-    # las rutas relativas utilizadas por los documentos.
     subprocess.run(
         [
-            "latexmk",
-            "-pdf",
-            "-interaction=nonstopmode",
-            "-halt-on-error",
-            "-file-line-error",
-            "-outdir=../build",
-            source_file.name,
+            "latexmk", "-pdf", "-interaction=nonstopmode",
+            "-halt-on-error", "-file-line-error",
+            f"-outdir=../build/{document}", source_file.name,
         ],
         cwd=PROGRAM_DIR,
         check=True,
     )
-
-    # Comprueba que efectivamente se haya generado el PDF.
-    if not generated_pdf.exists():
-        print(
-            f"Error: la compilación no produjo {generated_pdf}",
-            file=sys.stderr,
-        )
-        raise SystemExit(1)
-
+    if not generated_pdf.is_file():
+        raise SystemExit(f"Error: la compilación no produjo {generated_pdf}")
     return generated_pdf
 
 
-def publish_documents(generated_documents: dict[str, Path]) -> None:
-    """Copia a dist/ únicamente un conjunto completo y válido."""
-
+def publish_locally(generated_documents: dict[str, Path]) -> None:
+    """Actualiza dist/ conjuntamente; esto todavía no toca Google Drive."""
     temporary_files: dict[str, Path] = {}
-
     try:
-        # Primero prepara todas las copias temporales.
-        # Si una copia falla, ningún PDF publicado se reemplaza.
         for document, generated_pdf in generated_documents.items():
             temporary_pdf = DIST_DIR / f".{document}.pdf.tmp"
             shutil.copyfile(generated_pdf, temporary_pdf)
             temporary_files[document] = temporary_pdf
 
-        # Solo después de preparar todo se reemplazan los entregables.
         for document, temporary_pdf in temporary_files.items():
             destination_pdf = DIST_DIR / f"{document}.pdf"
-
-            # replace sustituye el destino y funciona tanto en
-            # Windows como en Linux.
             temporary_pdf.replace(destination_pdf)
-
             print(f"Publicado localmente: dist/{destination_pdf.name}")
-
     finally:
-        # Retira cualquier temporal que haya quedado por un error.
         for temporary_pdf in temporary_files.values():
             if temporary_pdf.exists():
                 temporary_pdf.unlink()
 
 
 def main() -> None:
-    """Ejecuta la compilación y publicación local."""
+    """Ejecuta el flujo local completo, sin modificar Google Drive."""
+    arguments = parse_arguments()
+    if arguments.clean:
+        clean_build()
+        return
 
     verify_dependencies()
     prepare_directories()
+    generate_sources()
 
     generated_documents: dict[str, Path] = {}
-
-    # Compila todos los documentos antes de modificar dist/.
     for document in DOCUMENTS:
         generated_documents[document] = compile_document(document)
 
-    # Publica solamente si todas las compilaciones terminaron bien.
-    publish_documents(generated_documents)
+    publish_locally(generated_documents)
 
-    print()
-    print("Compilación completada correctamente.")
+    print("\nCompilación completada correctamente.")
     print("Entregables:")
-    print("  dist/programa.pdf")
-    print("  dist/cronograma.pdf")
+    for document in DOCUMENTS:
+        print(f"  dist/{document}.pdf")
+    print("Borrador operativo:")
+    print("  build/correos/bienvenida.txt")
+    print("  build/correos/aviso-posclase.txt")
 
 
-# Este condicional ejecuta main() solamente cuando abrimos este
-# archivo como programa, no cuando se importa desde otro módulo.
 if __name__ == "__main__":
     main()

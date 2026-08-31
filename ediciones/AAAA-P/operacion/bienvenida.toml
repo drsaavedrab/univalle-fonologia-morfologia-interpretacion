@@ -1,0 +1,36 @@
+# ============================================================
+# CORREO DE BIENVENIDA DE LA EDICIÓN
+# ============================================================
+#
+# Se utiliza al iniciar el periodo. No contiene destinatarios
+# ni envía mensajes automáticamente.
+
+[bienvenida]
+
+# {curso} se sustituye por el nombre de config/curso.tex.
+asunto = "{curso} — bienvenida e información inicial"
+
+saludo = "Apreciadas y apreciados estudiantes:"
+
+introduccion = """
+Les doy la bienvenida al curso. En este mensaje encontrarán la información y los recursos necesarios para comenzar el periodo.
+"""
+
+documentos = [
+  "Leer el programa del curso.",
+  "Revisar el cronograma y las lecturas iniciales.",
+  "Consultar el estado del curso.",
+]
+
+preparacion = [
+  "Completar la preparación indicada para la primera sesión.",
+]
+
+# Deja la lista vacía cuando no existan avisos adicionales.
+avisos = []
+
+[comunicacion]
+
+# Pega la URL de la carpeta compartida de esta edición.
+# Si queda vacía, el correo se genera sin ese bloque.
+enlace_carpeta = ""

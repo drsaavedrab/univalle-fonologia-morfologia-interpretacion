@@ -1,0 +1,136 @@
+% ============================================================
+% DOCUMENTO PRINCIPAL DEL ESTADO OPERATIVO DEL CURSO
+%
+% El contenido se genera desde:
+% ediciones/<edicion>/operacion/estado.toml
+% ============================================================
+
+\documentclass[10pt]{article}
+
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Permite reforzar el trazo de las versalitas sin cambiar su familia.
+\usepackage{pdfrender}
+\usepackage{microtype}
+% Formato media carta: compacto y cómodo para consulta rápida.
+\usepackage[
+    paperwidth=5.5in,
+    paperheight=8.5in,
+    top=1.25cm,
+    bottom=1.25cm,
+    left=1.3cm,
+    right=1.3cm,
+    includehead,
+    headheight=43pt,
+    headsep=8pt
+]{geometry}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% Permite presentar cada página del estado como una ficha enmarcada.
+\usepackage{mdframed}
+
+% Datos estables y variables del curso.
+\input{../config/curso.tex}
+\input{../config/edicion-activa.tex}
+\input{../ediciones/\edicionActiva/semestre.tex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% Cabecera institucional compartida con los demás documentos.
+\fancyhf{}
+\fancyhead[L]{%
+    \IfFileExists{\rutaLogoInstitucional}{%
+        \includegraphics[width=3cm]{\rutaLogoInstitucional}%
+    }{}%
+}
+\fancyhead[R]{%
+    \scriptsize\color{gray}
+    \encabezadoInstitucional
+}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{43pt}
+\fancyfoot{}
+\pagestyle{fancy}
+
+\setlist[itemize]{
+    leftmargin=1.5em,
+    itemsep=2pt,
+    topsep=4pt
+}
+
+% Cada bloque se cierra dentro de su propia página. Esto evita que
+% «mdframed» corte visualmente el borde al producirse un salto.
+\newmdenv[
+    linecolor=gray!45,
+    backgroundcolor=gray!3,
+    linewidth=0.5pt,
+    roundcorner=2pt,
+    innerleftmargin=9pt,
+    innerrightmargin=9pt,
+    innertopmargin=7pt,
+    innerbottommargin=7pt,
+    skipabove=8pt,
+    skipbelow=0pt
+]{fichaestado}
+
+% Panel superior: resume en paralelo la sesión actual y la próxima.
+\newcommand{\panelSesiones}[6]{%
+    \begingroup
+    \setlength{\fboxsep}{7pt}%
+    \setlength{\fboxrule}{0.4pt}%
+    \noindent\fcolorbox{gray!38}{gray!10}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+            \begin{tabularx}{\linewidth}{@{}
+                >{\raggedright\arraybackslash}X
+                @{\hspace{8pt}\color{gray!35}\vrule width 0.4pt\hspace{8pt}}
+                >{\raggedleft\arraybackslash}X
+                @{}}
+                {\small\scshape\pdfrender{TextRenderingMode=FillStroke,LineWidth=.15pt}sesión actual} &
+                {\small\scshape\pdfrender{TextRenderingMode=FillStroke,LineWidth=.15pt}sesión próxima} \\[4pt]
+                {\bfseries Semana #1, sesión #2} &
+                {\bfseries Semana #4, sesión #5} \\[2pt]
+                {\small #3} & {\small #6}
+            \end{tabularx}%
+        }%
+    }%
+    \endgroup\par
+}
+
+% Caja compacta: mantiene la misma identidad en la segunda página.
+\newcommand{\cabeceraApartado}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{6pt}%
+    \setlength{\fboxrule}{0.4pt}%
+    \noindent\fcolorbox{gray!38}{gray!10}{%
+        \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+            {\large\bfseries #1\par}%
+        }%
+    }%
+    \endgroup\par
+}
+
+\begin{document}
+
+\begin{center}
+    {\normalsize\bfseries \institucion}\\
+    {\small \facultad}\\
+    {\small \departamento}\\[8pt]
+
+    {\large\bfseries Estado del Curso}\\[4pt]
+    {\Large\bfseries \nombreCurso}\\[4pt]
+    {\normalsize Periodo académico \periodoAcademico}
+\end{center}
+
+% Archivo generado por scripts/estado.py. El archivo automático
+% contiene dos fichas independientes, una para cada página.
+\input{../build/estado-contenido.tex}
+
+\end{document}

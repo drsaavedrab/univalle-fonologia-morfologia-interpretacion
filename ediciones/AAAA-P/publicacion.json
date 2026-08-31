@@ -1,6 +1,6 @@
-
 {
   "remoto": "lectures-drive",
+  "archivo": "Lectures/INSTITUCION/NOMBRE_CURSO/AAAA-P/09_Archivo",
   "publicaciones": [
     {
       "nombre": "documentos_generales",
@@ -8,7 +8,8 @@
       "destino": "Lectures/INSTITUCION/NOMBRE_CURSO/AAAA-P/00_Documentos_Generales",
       "archivos": [
         "programa.pdf",
-        "cronograma.pdf"
+        "cronograma.pdf",
+        "estado-del-curso.pdf"
       ]
     }
   ]

@@ -144,11 +144,11 @@
 }
 
 \newcommand{\lecturasComplementarias}{%
-    \textbf{Complementarias:}\par
+    \par\textbf{Complementarias:}\par
 }
 
 \newcommand{\lecturaComplementaria}{%
-    \textbf{Complementaria:}\par
+    \par\textbf{Complementaria:}\par
 }
 
 % Mensajes uniformes para sesiones sin lectura.
@@ -184,7 +184,8 @@
 % ------------------------------------------------------------
 
 % Inserta el cronograma correspondiente a la edición activa.
-\input{../ediciones/\edicionActiva/cronograma/contenido.tex}
+% Tabla automática generada por scripts/cronograma.py desde los TOML.
+\input{../build/cronograma-contenido.tex}
 
 % La bibliografía comienza en una página nueva únicamente
 % dentro del cronograma.

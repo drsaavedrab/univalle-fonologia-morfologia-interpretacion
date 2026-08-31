@@ -1,0 +1,12 @@
+Asunto: ${asunto}
+
+${saludo}
+
+${introduccion}
+
+${bloque_documentos}
+${bloque_carpeta}
+${bloque_preparacion}
+${bloque_avisos}
+Cordialmente,
+${docente}

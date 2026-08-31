@@ -1,51 +1,23 @@
+# Edición AAAA-P
 
-# Edición activa
-
-Esta carpeta representa una edición concreta del curso.
-
-Al crear un curso o periodo nuevo, `AAAA-P` debe reemplazarse por un identificador como:
-
-```text
-2026-2
-2027-1
-```
+Esta carpeta es el molde de una ejecución concreta del curso. Al crear el repositorio o abrir el primer periodo, renómbrala con un identificador válido, como `2026-2`.
 
 ## Contenido
 
 - `semestre.tex`: periodo, grupo, salón y horario.
-- `planificacion.md`: estado y pendientes de la edición.
-- `cronograma/contenido.tex`: cronograma específico.
-- `publicacion.json`: categorías y destinos de Google Drive.
+- `cronograma/calendario.toml`: fechas, días de clase y excepciones.
+- `cronograma/contenidos.toml`: temas, lecturas y actividades por sesión.
+- `operacion/estado.toml`: situación real, próxima sesión y aviso posterior a clase.
+- `operacion/bienvenida.toml`: contenido y enlace del correo inicial.
+- `bitacora.md`: notas docentes internas de esta ejecución.
+- `publicacion.json`: lista autorizada y destinos en Drive.
 
-## Publicación
+Los `.tex` generados, auxiliares, borradores de correo y PDF no se guardan aquí: aparecen en `build/` y `dist/`.
 
-La simulación es el comportamiento predeterminado:
+## Regla de edición
 
-```bash
-python scripts/publicar.py
-```
+Los datos del periodo viven aquí. Las mejoras reutilizables permanecen en `programa/`, `bibliografia/`, `actividades/` y `materiales/`.
 
-La publicación real requiere:
+## Privacidad
 
-```bash
-python scripts/publicar.py --apply
-```
-
-Puede seleccionarse una categoría:
-
-```bash
-python scripts/publicar.py --only documentos_generales
-```
-
-## Contenido opcional
-
-Solo cuando exista un caso real podrán crearse:
-
-- `actividades/`: datos variables de actividades utilizadas;
-- `materiales/`: contenidos exclusivos de la edición.
-
-Las fuentes reutilizables permanecen en los bancos generales del curso.
-
-## Información privada
-
-Esta carpeta no debe contener listas estudiantiles, correos, calificaciones, entregas ni credenciales.
+No almacenes listas, correos, calificaciones, entregas ni credenciales en esta carpeta.

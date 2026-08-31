@@ -1,19 +1,7 @@
-
 # Notas internas
 
-Esta carpeta contiene notas docentes y documentos de referencia que no pertenecen exclusivamente a una edición.
+Esta carpeta contiene decisiones generales y referencias internas que no pertenecen a un periodo concreto.
 
-Puede incluir:
+Las observaciones del desarrollo de un semestre se escriben en `ediciones/<periodo>/bitacora.md`. La operación está documentada en `manuales/03-operacion-cotidiana.md`.
 
-- decisiones generales sobre el diseño del curso;
-- criterios de organización;
-- observaciones para futuras revisiones;
-- documentos originales utilizados como referencia.
-
-La planificación correspondiente a un periodo específico debe almacenarse en:
-
-```text
-ediciones/<periodo>/planificacion.md
-```
-
-Los documentos Word utilizados como referencia local están excluidos de Git mediante `.gitignore`.
+Los documentos Word de referencia local están excluidos por `.gitignore`. No guardes aquí información estudiantil privada.

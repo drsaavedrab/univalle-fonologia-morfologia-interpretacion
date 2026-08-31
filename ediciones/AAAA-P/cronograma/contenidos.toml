@@ -1,0 +1,39 @@
+# ============================================================
+# CONTENIDOS ACADÉMICOS DEL CRONOGRAMA
+# ============================================================
+#
+# Cada fila se vincula con la semana y las sesiones calculadas
+# por calendario.toml. Las claves bibliográficas deben existir
+# en bibliografia/referencias.bib.
+
+[[filas]]
+semana = 1
+sesiones = ["I"]
+tema = "Presentación del curso."
+actividad = "Encuadre inicial."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "referencia-pendiente"
+
+
+[[filas]]
+semana = 1
+sesiones = ["II"]
+tema = "Primer contenido del curso."
+actividad = "Actividad inicial."
+sin_lectura = "adicional"
+
+
+# Ejemplo de una fila que reúne dos sesiones:
+#
+# [[filas]]
+# semana = 2
+# sesiones = ["I", "II"]
+# tema = "Tema de la semana."
+# actividad = "Trabajo correspondiente."
+#
+# [[filas.lecturas]]
+# categoria = "complementaria"
+# clave = "apellido2026"
+# detalle = "cap.~1, pp.~1--20"

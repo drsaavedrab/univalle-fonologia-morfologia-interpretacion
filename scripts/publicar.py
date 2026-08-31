@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 
@@ -38,6 +39,15 @@ def cargar_argumentos():
         help=(
             "Ejecuta realmente la publicación. "
             "Sin esta opción solo se simula."
+        ),
+    )
+
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        help=(
+            "Sincroniza las categorías seleccionadas y mueve "
+            "los sobrantes a 09_Archivo. Sin --apply solo simula."
         ),
     )
 
@@ -209,27 +219,66 @@ def validar_publicacion(publicacion):
     return origen
 
 
+def validar_ruta_remota(ruta, etiqueta):
+    """Rechaza destinos vacíos, absolutos o capaces de escapar."""
+
+    if not isinstance(ruta, str) or not ruta.strip():
+        sys.exit(f"ERROR: la ruta remota '{etiqueta}' está vacía.")
+
+    partes = [parte for parte in ruta.replace("\\", "/").split("/") if parte]
+    if ruta.startswith(("/", "\\")) or any(
+        parte in {".", ".."} for parte in partes
+    ):
+        sys.exit(f"ERROR: ruta remota no válida en '{etiqueta}': {ruta}")
+
+    if len(partes) < 4:
+        sys.exit(
+            f"ERROR: la ruta remota '{etiqueta}' es demasiado amplia: {ruta}"
+        )
+
+    return "/".join(partes)
+
+
 def ejecutar_publicacion(
     remoto,
     publicacion,
     origen,
     aplicar,
+    limpiar,
+    carpeta_archivo,
 ):
-    """Ejecuta una categoría de publicación mediante rclone."""
+    """Copia o sincroniza una categoría mediante rclone."""
 
-    destino_remoto = (
-        f"{remoto}:{publicacion['destino']}"
-    )
+    destino = validar_ruta_remota(publicacion["destino"], "destino")
+    destino_remoto = f"{remoto}:{destino}"
+    operacion = "sync" if limpiar else "copy"
 
     comando = [
         "rclone",
-        "copy",
+        operacion,
         str(origen),
         destino_remoto,
         "--files-from",
         "-",
         "--verbose",
     ]
+
+    archivo_remoto = None
+    if limpiar:
+        archivo = validar_ruta_remota(carpeta_archivo, "archivo")
+        marca = datetime.now().strftime("%Y%m%d-%H%M%S")
+        archivo_remoto = f"{remoto}:{archivo}/{publicacion['nombre']}/{marca}"
+        if archivo_remoto == destino_remoto:
+            sys.exit("ERROR: el archivo remoto coincide con el destino.")
+        comando.extend(
+            [
+                "--delete-excluded",
+                "--backup-dir",
+                archivo_remoto,
+                "--max-delete",
+                "20",
+            ]
+        )
 
     if not aplicar:
         comando.append("--dry-run")
@@ -239,6 +288,9 @@ def ejecutar_publicacion(
     print(f"Categoría: {publicacion['nombre']}")
     print(f"Origen:    {origen}")
     print(f"Destino:   {destino_remoto}")
+    print(f"Operación: {operacion}")
+    if archivo_remoto:
+        print(f"Archivo:   {archivo_remoto}")
     print("Archivos:")
 
     for nombre in publicacion["archivos"]:
@@ -283,13 +335,16 @@ def main():
     )
 
     if argumentos.apply:
-        print(
-            "MODO PUBLICACIÓN: Google Drive será actualizado."
-        )
+        if argumentos.clean:
+            print(
+                "MODO SINCRONIZACIÓN: los sobrantes se moverán a 09_Archivo."
+            )
+        else:
+            print("MODO PUBLICACIÓN: Google Drive será actualizado.")
     else:
-        print(
-            "MODO SIMULACIÓN: Google Drive no será modificado."
-        )
+        print("MODO SIMULACIÓN: Google Drive no será modificado.")
+        if argumentos.clean:
+            print("Se simulará también la limpieza administrada.")
 
     print(f"Edición activa: {edicion}")
 
@@ -301,6 +356,8 @@ def main():
             publicacion,
             origen,
             argumentos.apply,
+            argumentos.clean,
+            configuracion.get("archivo", ""),
         )
 
     print()

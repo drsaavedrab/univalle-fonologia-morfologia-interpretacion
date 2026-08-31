@@ -1,76 +1,67 @@
-
 # Scripts
 
-Esta carpeta contiene las herramientas de automatización del repositorio.
+## Flujo principal
 
-## `build.py`
+`python scripts/build.py` valida la edición activa, genera cronograma, estado y correos, compila los tres documentos públicos y actualiza conjuntamente `dist/`. No modifica Google Drive.
 
-Compila los documentos principales:
+Las salidas operativas son:
+
+- `build/correos/bienvenida.txt`;
+- `build/correos/aviso-posclase.txt`.
+
+## Módulos
+
+### `build.py`
+
+Orquesta el flujo completo. `python scripts/build.py --clean` elimina únicamente auxiliares de `build/`, conserva `.gitkeep` y no modifica `dist/`.
+
+### `cronograma.py`
+
+Valida calendario, contenidos y claves BibTeX y genera `build/cronograma-contenido.tex`. Normalmente lo llama `build.py`.
 
 ```bash
-python scripts/build.py
+python scripts/cronograma.py
+python scripts/cronograma.py --clean
 ```
 
-El proceso:
+### `estado.py`
 
-1. compila el programa y el cronograma;
-2. almacena los archivos técnicos en `build/`;
-3. comprueba que ambas compilaciones terminen correctamente;
-4. actualiza los PDF de `dist/`.
+Combina `operacion/estado.toml` con el calendario y genera `build/estado-contenido.tex`. No redacta ni envía correos.
 
-Si una compilación falla, `dist/` no debe quedar parcialmente actualizado.
+### `correos.py`
 
-## `publicar.py`
+Combina las plantillas de `correos/plantillas/` con los TOML de la edición y genera borradores de texto plano.
 
-Publica los archivos autorizados de la edición activa mediante rclone.
+```bash
+python scripts/correos.py
+python scripts/correos.py --only bienvenida
+python scripts/correos.py --only aviso-posclase
+```
 
-Simulación:
+La bienvenida usa `operacion/bienvenida.toml`. El aviso posterior a clase usa `operacion/estado.toml` y calcula la próxima sesión desde el calendario. Ningún comando envía mensajes.
+
+### `publicar.py`
+
+`python scripts/publicar.py` simula la publicación. La modificación real de Drive exige `--apply`. Puede limitarse con `--only documentos_generales`.
 
 ```bash
 python scripts/publicar.py
-```
-
-Publicación real:
-
-```bash
 python scripts/publicar.py --apply
+python scripts/publicar.py --clean
+python scripts/publicar.py --clean --apply
 ```
 
-Selección de una categoría:
+Con `--clean --apply`, los sobrantes se mueven a la ruta `archivo` de `publicacion.json`, dentro de `09_Archivo`, y se aplica un máximo de veinte retiros.
 
-```bash
-python scripts/publicar.py --only documentos_generales
-```
+## Qué limpia cada opción
 
-Publicación real de una categoría:
+| Comando | Modifica | No modifica |
+|---|---|---|
+| `build.py --clean` | auxiliares y correos generados de `build/` | fuentes, `dist/`, Git, Drive |
+| `cronograma.py --clean` | fragmento generado del cronograma | TOML, `.bib`, PDF, Drive |
+| `publicar.py --clean` | nada: solo simula | todo |
+| `publicar.py --clean --apply` | destino administrado; archiva sobrantes | repositorio local y otras carpetas de Drive |
 
-```bash
-python scripts/publicar.py --only documentos_generales --apply
-```
+## Seguridad
 
-El comportamiento predeterminado es siempre una simulación. Esto permite revisar el destino y los archivos antes de modificar Google Drive.
-
-## Configuración
-
-`publicar.py` lee:
-
-```text
-config/edicion-activa.tex
-```
-
-Después carga:
-
-```text
-ediciones/<edicion-activa>/publicacion.json
-```
-
-Las credenciales de Google Drive pertenecen a la configuración local de rclone y nunca deben añadirse a Git.
-
-## Principios de seguridad
-
-Los scripts no deben:
-
-- publicar archivos no enumerados;
-- almacenar credenciales;
-- publicar información privada;
-- eliminar automáticamente contenido de Google Drive.
+Las credenciales de rclone nunca se guardan en Git. Solo se publican archivos enumerados en `publicacion.json`. Los borradores deben revisarse y copiarse manualmente al cliente de correo.

@@ -1,0 +1,31 @@
+# ============================================================
+# CALENDARIO DE LA EDICIÓN
+# ============================================================
+
+# Sustituye estas fechas por el inicio y cierre oficiales.
+inicio = 2026-01-05
+fin = 2026-01-08
+
+# Las semanas se cuentan de lunes a domingo.
+inicio_semana = "lunes"
+
+# Escribe los días ordinarios de clase con tilde cuando corresponda.
+dias_clase = ["martes", "jueves"]
+
+# Formato breve mostrado en el cronograma.
+formato_fecha = "breve"
+
+
+# ============================================================
+# EXCEPCIONES
+# ============================================================
+#
+# Una excepción conserva la sesión, pero cambia su modalidad
+# y añade una nota. Duplica el bloque cuando sea necesario.
+#
+# [[excepciones]]
+# fecha = 2026-01-15
+# modalidad = "trabajo autónomo"
+# nota = """
+# Descripción breve de la actividad o indicación especial.
+# """
