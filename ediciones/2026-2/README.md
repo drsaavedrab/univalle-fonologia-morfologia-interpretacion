@@ -1,4 +1,4 @@
-# Edición AAAA-P
+# Edición 2026-2
 
 Esta carpeta es el molde de una ejecución concreta del curso. Al crear el repositorio o abrir el primer periodo, renómbrala con un identificador válido, como `2026-2`.
 

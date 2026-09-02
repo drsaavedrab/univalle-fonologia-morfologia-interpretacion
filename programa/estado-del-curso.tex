@@ -23,7 +23,7 @@
     left=1.3cm,
     right=1.3cm,
     includehead,
-    headheight=43pt,
+    headheight=48pt,
     headsep=8pt
 ]{geometry}
 \usepackage{enumitem}
@@ -48,15 +48,15 @@
 \fancyhf{}
 \fancyhead[L]{%
     \IfFileExists{\rutaLogoInstitucional}{%
-        \includegraphics[width=3cm]{\rutaLogoInstitucional}%
+        \includegraphics[height=1.6cm,keepaspectratio]{\rutaLogoInstitucional}%
     }{}%
 }
 \fancyhead[R]{%
     \scriptsize\color{gray}
-    \encabezadoInstitucional
+    \raisebox{0.22cm}{\shortstack[r]{\encabezadoInstitucional}}%
 }
 \renewcommand{\headrulewidth}{0pt}
-\setlength{\headheight}{43pt}
+\setlength{\headheight}{48pt}
 \fancyfoot{}
 \pagestyle{fancy}
 

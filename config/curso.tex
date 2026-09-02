@@ -16,13 +16,35 @@
 {Escuela de Ciencias del Lenguaje / Escuela de Rehabilitación Humana}
 
 \newcommand{\nombreCurso}
-{Fonología y Morfología - Interpretación}
+{Fonología y Morfología / Interpretación}
+
+% Variante de presentación usada únicamente en la ficha académica.
+% La tabla interna [t] se alinea por su primera línea y crece hacia
+% abajo, sin alterar el nombre usado por correos, scripts o metadatos.
+\newcommand{\nombreCursoFicha}
+{%
+\begin{tabular}[t]{@{}r@{}}
+Fonología y Morfología \\
+/ \\
+Interpretación
+\end{tabular}%
+}
 
 \newcommand{\codigoCurso}
 {204061C}
 
 \newcommand{\planEstudios}
-{Lingüística}
+{Interpretación para Sordos y Guía-Interpretación para Sordociegos}
+
+% Variante visual de tres líneas para la ficha académica.
+\newcommand{\planEstudiosFicha}
+{%
+\begin{tabular}[t]{@{}l@{}}
+Interpretación para Sordos \\
+y Guía-Interpretación \\
+para Sordociegos
+\end{tabular}%
+}
 
 \newcommand{\creditosCurso}
 {2}
@@ -51,14 +73,14 @@
 % La ruta se interpreta desde los documentos ubicados en
 % programa/.
 \newcommand{\rutaLogoInstitucional}
-{../recursos/identidad/logo-univalle.png}
+{../recursos/identidad/logo-univalle.jpg}
 
 % Texto mostrado en el extremo derecho del encabezado.
 %
 % \\ crea un salto de línea dentro del encabezado.
 \newcommand{\encabezadoInstitucional}
 {%
-UNIDAD ACADÉMICA\\
-DEPENDENCIA\\
-SEDE
+Facultad de Humanidades / Facultad de Salud \\
+Escuela de Ciencias del Lenguaje / Escuela de Rehabilitación Humana \\
+Universidad del Valle
 }

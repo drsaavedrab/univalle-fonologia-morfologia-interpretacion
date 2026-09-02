@@ -7,12 +7,11 @@
 % cronograma particular de cada edición.
 % ============================================================
 
-% Crea el encabezado numerado de la sección.
 \section{Contenidos del curso}
 
-Presenta aquí la organización conceptual del curso. Las semanas y
-fechas específicas deben permanecer en el cronograma de cada
-edición.
+El curso se organiza en cinco bloques temáticos. La distribución
+detallada por semanas, sesiones y lecturas se presenta en el
+cronograma de la edición correspondiente.
 
 
 % ------------------------------------------------------------
@@ -33,51 +32,149 @@ edición.
 % Controla el espacio horizontal interno de las celdas.
 \setlength{\tabcolsep}{7pt}
 
+\newpage
 
 % ------------------------------------------------------------
 % TABLA DE CONTENIDOS
 % ------------------------------------------------------------
 
-% tabularx crea una tabla que ocupa todo el ancho del texto.
+% longtable permite que la tabla continúe en otra página.
 %
-% La primera columna:
-% - tiene un ancho fijo del 22 %;
-% - utiliza negrita;
-% - alinea el contenido a la izquierda.
+% @{} elimina el espacio exterior de los extremos.
 %
-% La segunda columna:
-% - usa X para ocupar el espacio restante;
-% - alinea el contenido a la izquierda.
+% Primera columna:
+% - ancho fijo del 27 %;
+% - alineación a la izquierda.
 %
-% @{} elimina el espacio automático de los bordes.
-\begin{tabularx}{\textwidth}{@{}
-    >{\bfseries\raggedright\arraybackslash}p{0.22\textwidth}
-    >{\raggedright\arraybackslash}X
+% Segunda columna:
+% - ancho fijo del 68 %;
+% - alineación a la izquierda.
+\begin{longtable}{@{}
+    >{\raggedright\arraybackslash}p{0.27\textwidth}
+    >{\raggedright\arraybackslash}p{0.68\textwidth}
 @{}}
 
-% booktabs proporciona líneas horizontales tipográficas.
+% Encabezado de la primera página.
 \toprule
+\textbf{Bloque} & \textbf{Propósito y temas principales} \\
+\midrule
+\endfirsthead
 
-% & separa las columnas.
-% \\ termina la fila.
-\textbf{Unidad o bloque} & \textbf{Contenidos} \\
+% Encabezado que se repetirá si la tabla continúa
+% en una página posterior.
+\toprule
+\textbf{Bloque} & \textbf{Propósito y temas principales} \\
+\midrule
+\endhead
 
-% Separa el encabezado del cuerpo de la tabla.
+% Pie de las páginas intermedias.
+\midrule
+\multicolumn{2}{r}{\small Continúa en la página siguiente.} \\
+\endfoot
+
+% Pie de la última página.
+\bottomrule
+\endlastfoot
+
+
+% ------------------------------------------------------------
+% BLOQUE 0
+% ------------------------------------------------------------
+
+\textbf{Bloque 0}\\
+Introducción
+&
+\textbf{Propósito.}
+Conocer el programa de curso, así como los objetivos, contenidos y criterios de evaluación.
+Asimismo, hacer una primera aproximación a los conceptos de la clase e iniciar con lo relativo
+a la fonética.
+
+\textbf{Temas.}
+Programa de curso; cronograma de curso; introducción a la fonología y morfología;
+introducción a la fonética.
+\\
+
 \midrule
 
-Unidad 1 &
-Incorpora aquí los contenidos de la primera unidad. \\
 
-% Añade espacio vertical sin dibujar otra línea.
-\addlinespace[4pt]
+% ------------------------------------------------------------
+% BLOQUE I
+% ------------------------------------------------------------
 
-Unidad 2 &
-Incorpora aquí los contenidos de la segunda unidad. \\
+\textbf{Bloque I}\\
+Fonología
+&
+\textbf{Propósito.}
+Explorar el objeto de estudio de la fonología, las distinción entre 
+fonema y parámetro formacional, así como los sistemas de notación, junto a los 
+procesos y restricciones fonológicas. 
 
-% Cierra visualmente la tabla.
-\bottomrule
+\textbf{Temas.}
+La estructura interna de las palabras; los fonemas; los parámetros formacionales; 
+los tipos de señas; las restricciones fonológicas; los procesos fonológicos.
+\\
 
-\end{tabularx}
+\midrule
+
+
+% ------------------------------------------------------------
+% BLOQUE II
+% ------------------------------------------------------------
+
+\textbf{Bloque II}\\
+Entre la fonología y la morfología
+&
+\textbf{Propósito.}
+Problematizar el concepto de \textit{fonema} y su par en señas el 
+\textit{parámetro formacional}, introduciendo la noción de \textbf{iconicidad} 
+y sus implicaciones para el análisis de las lenguas.
+
+\textbf{Temas.}
+El símbolismo sonoro y la onomatopeyas; la iconicidad, el morfema y los morfofonemas.
+\\
+
+\midrule
+
+
+% ------------------------------------------------------------
+% BLOQUE III
+% ------------------------------------------------------------
+
+\textbf{Bloque III}\\
+Morfología
+&
+\textbf{Propósito.}
+Explorar el objeto de estudio de la morfología, las distinción entre 
+morfología flexiva y morfología productiva y sus respectivos procesos 
+de modificación y creación de "palabras". 
+
+
+\textbf{Temas.}
+
+La estructura interna de las palabras; los morfemas; los procesos morfológicos; 
+la morfología flexiva; la morfología derivativa; la morfología compositiva;
+la incorporación y la clasificación.
+\\
+
+\midrule
+
+% ------------------------------------------------------------
+% BLOQUE IV
+% ------------------------------------------------------------
+
+\textbf{Bloque IV}\\
+Cierre
+&
+\textbf{Propósito.}
+Profundizar en la estructura del léxico en las lenguas y su relación con la fonología y la morfología.
+Asimismo, hacer el respectivo cierre del curso con la entrega final y la (auto) evaluación.
+
+\textbf{Temas.}
+La estructura del léxico; el léxico nativo; el léxico no-nativo; la relación entre fonología, morfología y léxico; 
+cierre del curso y (auto) evaluación final.;
+\\
+
+\end{longtable}
 
 % Finaliza el grupo de ajustes locales.
 \endgroup

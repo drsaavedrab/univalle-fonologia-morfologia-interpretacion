@@ -6,20 +6,16 @@
 % porcentajes mediante una tabla de dos columnas.
 % ============================================================
 
-% Crea el encabezado numerado de la sección.
+\newpage
+
 \section{Evaluación}
 
 La evaluación del curso se distribuirá de la siguiente manera:
 
-% tabularx crea una tabla que ocupa todo el ancho del texto.
+% \textwidth hace que la tabla ocupe el ancho del texto.
 %
-% La primera columna X:
-% - utiliza el espacio disponible;
-% - alinea el contenido a la izquierda.
-%
-% La segunda columna:
-% - tiene un ancho fijo;
-% - alinea los porcentajes a la derecha.
+% La primera columna X es flexible y se alinea a la izquierda.
+% La segunda tiene ancho fijo y se alinea a la derecha.
 \begin{tabularx}{\textwidth}{@{}
     >{\raggedright\arraybackslash}X
     >{\raggedleft\arraybackslash}p{0.18\textwidth}
@@ -28,26 +24,23 @@ La evaluación del curso se distribuirá de la siguiente manera:
 % \toprule crea la línea superior.
 \toprule
 
-% Encabezados de las columnas.
+% Encabezados de la tabla.
 \textbf{Actividad} & \textbf{Porcentaje} \\
 
 % \midrule separa el encabezado del contenido.
 \midrule
 
-% \, añade un espacio pequeño antes del signo de porcentaje.
-% \% permite imprimir el carácter especial «%».
-Actividad evaluativa 1 & XX\,\% \\
+Participación y asistencia & 20\,\%\footnote{Este porcentaje se calcula considerando la siguiente distribución porcentual: participación (80\%) y asistencia (20\%).}\\
+Talleres Conceptuales Grupales (4) & 45\,\% \\
+Actividad final & 25\,\% \\
+(Auto) Evaluación final & 10\,\% \\
 
-Actividad evaluativa 2 & XX\,\% \\
+% Línea que separa el total.
+\midrule
 
-Actividad evaluativa 3 & XX\,\% \\
+\textbf{Total} & \textbf{100\,\%} \\
 
 % \bottomrule crea la línea inferior.
 \bottomrule
 
-% Finaliza la tabla.
 \end{tabularx}
-
-% Sustituye XX por valores numéricos y comprueba que el total
-% corresponda al 100 %.
-Los porcentajes deben revisarse y completar el 100\,\%.
