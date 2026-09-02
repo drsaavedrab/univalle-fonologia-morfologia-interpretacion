@@ -98,9 +98,44 @@ Las fuentes reutilizables se organizan por contenido estable:
 - `actividades/`: talleres, controles, seminarios y guías evaluativas reutilizables;
 - `materiales/`: handouts, presentaciones, hojas de estudio, ejemplos o datos organizados por tema.
 
-Los datos variables —fecha, grupo, plazo y enlace de entrega— no se incrustan en la fuente general. Se incorporarán en la configuración de la edición cuando exista el primer caso real.
+Los DOCX reutilizables se versionan como fuentes, aunque Git no pueda mostrar diferencias internas línea por línea. Los PDF derivados no se versionan.
 
-Las entregas estudiantiles y el seguimiento académico permanecen en `Teaching/Private/` y en las áreas privadas de Drive, nunca en Git.
+La selección semestral se declara en `ediciones/<periodo>/publicacion.json`. Por ejemplo:
+
+```json
+{
+  "nombre": "materiales_semana_01",
+  "origen": "dist/materiales/semana-01",
+  "destino": "Lectures/INSTITUCION/CURSO/PERIODO/03_Materiales/Semana 01",
+  "archivos": [
+    "introduccion-a-la-gramatica.pdf"
+  ],
+  "conversiones": [
+    {
+      "fuente": "materiales/introduccion-a-la-gramatica/handout-estudiantes.docx",
+      "salida": "introduccion-a-la-gramatica.pdf"
+    }
+  ]
+}
+```
+
+`fuente` parte de la raíz del repositorio. `salida` es relativa a `origen` y debe aparecer también en `archivos`. Así una sola entrada decide qué fuente se usa, cómo se genera y dónde se publica durante el periodo.
+
+Preparación sin acceder a Drive:
+
+```bash
+python scripts/materiales.py --only materiales_semana_01
+```
+
+Simulación completa de esa categoría:
+
+```bash
+python scripts/publicar.py --only materiales_semana_01
+```
+
+La simulación genera el PDF local si hace falta. Solo `--apply` lo sube.
+
+Las entregas estudiantiles y el seguimiento académico permanecen fuera de Git y en las áreas privadas correspondientes.
 
 ## Compilar
 

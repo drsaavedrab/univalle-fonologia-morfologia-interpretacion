@@ -10,7 +10,7 @@ Esta carpeta es el molde de una ejecución concreta del curso. Al crear el repos
 - `operacion/estado.toml`: situación real, próxima sesión y aviso posterior a clase.
 - `operacion/bienvenida.toml`: contenido y enlace del correo inicial.
 - `bitacora.md`: notas docentes internas de esta ejecución.
-- `publicacion.json`: lista autorizada y destinos en Drive.
+- `publicacion.json`: destinos, archivos autorizados y conversiones DOCX→PDF de materiales para Drive.
 
 Los `.tex` generados, auxiliares, borradores de correo y PDF no se guardan aquí: aparecen en `build/` y `dist/`.
 

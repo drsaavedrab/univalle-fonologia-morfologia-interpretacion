@@ -5,6 +5,7 @@
 
 # Mantiene finales de línea LF entre Windows y Linux.
 *.py   text eol=lf
+*.ps1  text eol=lf
 *.tex  text eol=lf
 *.bib  text eol=lf
 *.md   text eol=lf

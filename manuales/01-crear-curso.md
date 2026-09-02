@@ -75,7 +75,7 @@ Edita únicamente los datos variables del periodo:
 - `ediciones/2026-2/cronograma/contenidos.toml`: semanas, sesiones, temas, lecturas y actividades;
 - `ediciones/2026-2/operacion/estado.toml`: estado inicial, próxima sesión y aviso posterior a clase;
 - `ediciones/2026-2/operacion/bienvenida.toml`: contenido del correo inicial;
-- `ediciones/2026-2/publicacion.json`: rutas del curso en Drive;
+- `ediciones/2026-2/publicacion.json`: rutas del curso en Drive y selección semestral de materiales DOCX→PDF;
 - `ediciones/2026-2/bitacora.md`: pendientes y notas de trabajo.
 
 ## 5. Incorporar el programa y la bibliografía

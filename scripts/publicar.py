@@ -12,6 +12,8 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import materiales
+
 
 # scripts/ está dentro de la raíz del repositorio.
 RAIZ_REPO = Path(__file__).resolve().parent.parent
@@ -333,6 +335,20 @@ def main():
         configuracion["publicaciones"],
         argumentos.only,
     )
+
+    # Las categorías pueden declarar conversiones DOCX→PDF.
+    # La preparación sucede también durante la simulación, pero solo
+    # modifica salidas locales ignoradas dentro de dist/.
+    try:
+        resultados_materiales = materiales.preparar_publicaciones(
+            publicaciones
+        )
+    except materiales.ErrorMaterial as error:
+        sys.exit(f"ERROR: no se pudieron preparar los materiales: {error}")
+
+    if resultados_materiales:
+        print("Preparando materiales de la edición activa:")
+        materiales.mostrar_resultados(resultados_materiales)
 
     if argumentos.apply:
         if argumentos.clean:

@@ -40,9 +40,27 @@ python scripts/correos.py --only aviso-posclase
 
 La bienvenida usa `operacion/bienvenida.toml`. El aviso posterior a clase usa `operacion/estado.toml` y calcula la próxima sesión desde el calendario. Ningún comando envía mensajes.
 
+### `materiales.py`
+
+Convierte a PDF los DOCX declarados en `publicacion.json`. En Windows usa Microsoft Word; en Linux y otros sistemas busca LibreOffice. No modifica Drive.
+
+```bash
+python scripts/materiales.py
+python scripts/materiales.py --only materiales_semana_01
+python scripts/materiales.py --force
+```
+
+Las salidas se guardan bajo `dist/materiales/` y permanecen fuera de Git. `--force` regenera incluso cuando el PDF es más reciente que su fuente.
+
+### `exportar-docx-word.ps1`
+
+Adaptador interno utilizado por `materiales.py` para controlar Microsoft Word en Windows. No se ejecuta directamente durante el flujo normal.
+
 ### `publicar.py`
 
 `python scripts/publicar.py` simula la publicación. La modificación real de Drive exige `--apply`. Puede limitarse con `--only documentos_generales`.
+
+Antes de validar una categoría, prepara automáticamente sus conversiones DOCX→PDF. La simulación puede crear o actualizar archivos locales en `dist/`, pero nunca modifica Drive sin `--apply`.
 
 ```bash
 python scripts/publicar.py
