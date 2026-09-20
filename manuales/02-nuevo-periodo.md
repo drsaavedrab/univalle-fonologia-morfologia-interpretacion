@@ -42,7 +42,7 @@ La copia aprovecha la estructura ya validada, pero todavía no está lista para 
 En `ediciones/2027-1/`:
 
 1. `semestre.tex`: cambia periodo, grupo, salón y horario.
-2. `cronograma/calendario.toml`: cambia inicio, fin, días ordinarios y excepciones.
+2. `cronograma/calendario.toml`: cambia inicio, fin, días ordinarios, excepciones y `mostrar_sesion`. Usa `true` si necesitas distinguir varias sesiones semanales y `false` si solo existe una.
 3. `cronograma/contenidos.toml`: revisa cada semana y sesión; conserva contenidos útiles, pero no supongas que el calendario será idéntico.
 4. `operacion/estado.toml`: vuelve al estado de inicio y borra avisos antiguos.
 5. `operacion/bienvenida.toml`: actualiza el mensaje inicial, la preparación y el enlace compartido.

@@ -434,8 +434,12 @@ def preparar_filas(
     return resultado
 
 
-def crear_latex(edicion: str, filas: list[dict]) -> str:
-    """Construye la tabla longtable completa."""
+def crear_latex(
+    edicion: str,
+    filas: list[dict],
+    mostrar_sesion: bool = True,
+) -> str:
+    """Construye la tabla longtable con sesión visible u oculta."""
 
     lineas = [
         "% Generado automáticamente. No editar.",
@@ -446,30 +450,63 @@ def crear_latex(edicion: str, filas: list[dict]) -> str:
         r"\renewcommand{\arraystretch}{1.25}",
         r"\setlength{\tabcolsep}{3.5pt}",
         r"\begin{longtable}{@{}",
-        r"    >{\centering\arraybackslash}p{0.055\textwidth}",
-        r"    >{\centering\arraybackslash}p{0.045\textwidth}",
-        r"    >{\centering\arraybackslash}p{0.075\textwidth}",
-        r"    >{\raggedright\arraybackslash}p{0.225\textwidth}",
-        r"    >{\raggedright\arraybackslash}p{0.395\textwidth}",
-        r"    >{\raggedleft\arraybackslash}p{0.15\textwidth}",
-        r"@{}}",
-        r"\toprule",
-        r"\textbf{Semana} & \textbf{Sesión} & \textbf{Fecha} &",
-        r"\textbf{Tema} & \textbf{Lecturas} & \textbf{Actividad} \\",
-        r"\midrule",
-        r"\endfirsthead",
-        r"\toprule",
-        r"\textbf{Semana} & \textbf{Sesión} & \textbf{Fecha} &",
-        r"\textbf{Tema} & \textbf{Lecturas} & \textbf{Actividad} \\",
-        r"\midrule",
-        r"\endhead",
-        r"\midrule",
-        r"\multicolumn{6}{r}{\small Continúa en la página siguiente.} \\",
-        r"\endfoot",
-        r"\bottomrule",
-        r"\endlastfoot",
-        "",
     ]
+
+    if mostrar_sesion:
+        lineas.extend(
+            [
+                r"    >{\centering\arraybackslash}p{0.055\textwidth}",
+                r"    >{\centering\arraybackslash}p{0.045\textwidth}",
+                r"    >{\centering\arraybackslash}p{0.075\textwidth}",
+                r"    >{\raggedright\arraybackslash}p{0.225\textwidth}",
+                r"    >{\raggedright\arraybackslash}p{0.395\textwidth}",
+                r"    >{\raggedleft\arraybackslash}p{0.15\textwidth}",
+                r"@{}}",
+            ]
+        )
+        encabezado = [
+            r"\textbf{Semana} & \textbf{Sesión} & \textbf{Fecha} &",
+            r"\textbf{Tema} & \textbf{Lecturas} & \textbf{Actividad} \\",
+        ]
+        numero_columnas = 6
+    else:
+        lineas.extend(
+            [
+                r"    >{\centering\arraybackslash}p{0.055\textwidth}",
+                r"    >{\centering\arraybackslash}p{0.075\textwidth}",
+                r"    >{\raggedright\arraybackslash}p{0.225\textwidth}",
+                r"    >{\raggedright\arraybackslash}p{0.425\textwidth}",
+                r"    >{\raggedleft\arraybackslash}p{0.18\textwidth}",
+                r"@{}}",
+            ]
+        )
+        encabezado = [
+            r"\textbf{Semana} & \textbf{Fecha} & \textbf{Tema} &",
+            r"\textbf{Lecturas} & \textbf{Actividad} \\",
+        ]
+        numero_columnas = 5
+
+    lineas.extend(
+        [
+            r"\toprule",
+            *encabezado,
+            r"\midrule",
+            r"\endfirsthead",
+            r"\toprule",
+            *encabezado,
+            r"\midrule",
+            r"\endhead",
+            r"\midrule",
+            (
+                rf"\multicolumn{{{numero_columnas}}}{{r}}"
+                r"{\small Continúa en la página siguiente.} \\"
+            ),
+            r"\endfoot",
+            r"\bottomrule",
+            r"\endlastfoot",
+            "",
+        ]
+    )
 
     semana_anterior: int | None = None
 
@@ -493,17 +530,25 @@ def crear_latex(edicion: str, filas: list[dict]) -> str:
             else str(fila["semana"])
         )
 
-        lineas.extend(
+        valores = [semana_visible]
+        if mostrar_sesion:
+            valores.append(fila["sesiones"])
+        valores.extend(
             [
-                f"{semana_visible} &",
-                f"{fila['sesiones']} &",
-                f"{fila['fecha']} &",
-                f"{fila['tema']} &",
-                f"{fila['lecturas']} &",
+                fila["fecha"],
+                fila["tema"],
+                fila["lecturas"],
                 fila["actividad"],
-                r"\\",
             ]
         )
+        lineas.extend(
+            [
+                f"{valor} &" if indice < len(valores) - 1 else valor
+                for indice, valor in enumerate(valores)
+            ]
+        )
+        lineas.append(r"\\")
+
         semana_anterior = fila["semana"]
 
     lineas.extend(
@@ -522,7 +567,17 @@ def generar() -> Path:
     """Valida las fuentes y genera la tabla en build/."""
 
     edicion = leer_edicion_activa()
-    sesiones = obtener_sesiones(edicion)
+    configuracion_calendario = cargar_toml(
+        carpeta_cronograma(edicion) / "calendario.toml"
+    )
+    sesiones = generar_sesiones(configuracion_calendario)
+    mostrar_sesion = configuracion_calendario.get(
+        "mostrar_sesion",
+        True,
+    )
+    if not isinstance(mostrar_sesion, bool):
+        raise ValueError("mostrar_sesion debe ser true o false.")
+
     contenidos = cargar_toml(
         carpeta_cronograma(edicion) / "contenidos.toml"
     ).get("filas", [])
@@ -537,7 +592,7 @@ def generar() -> Path:
     destino = BUILD / "cronograma-contenido.tex"
     temporal = destino.with_suffix(".tex.tmp")
     temporal.write_text(
-        crear_latex(edicion, filas),
+        crear_latex(edicion, filas, mostrar_sesion),
         encoding="utf-8",
         newline="\n",
     )

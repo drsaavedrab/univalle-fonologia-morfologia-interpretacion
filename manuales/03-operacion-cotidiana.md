@@ -28,7 +28,7 @@ Guardar un archivo en VS Code no equivale a hacer `git add`; hacer `git add` no 
 |---|---|
 | actualizar dónde está el curso y redactar el aviso posterior | `ediciones/<periodo>/operacion/estado.toml` |
 | preparar el correo inicial | `ediciones/<periodo>/operacion/bienvenida.toml` |
-| cambiar una fecha, modalidad o excepción | `ediciones/<periodo>/cronograma/calendario.toml` |
+| cambiar una fecha, modalidad, excepción o visibilidad de la columna «Sesión» | `ediciones/<periodo>/cronograma/calendario.toml` |
 | cambiar tema, lectura o actividad programada | `ediciones/<periodo>/cronograma/contenidos.toml` |
 | añadir una referencia | `bibliografia/referencias.bib` |
 | corregir el programa estable | `programa/secciones/` |

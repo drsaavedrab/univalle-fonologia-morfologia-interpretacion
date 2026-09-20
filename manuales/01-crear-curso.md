@@ -71,7 +71,7 @@ Guarda el logo en `recursos/identidad/`. Puedes conservar el nombre `logo-instit
 Edita únicamente los datos variables del periodo:
 
 - `ediciones/2026-2/semestre.tex`: periodo, grupo, salón y horario;
-- `ediciones/2026-2/cronograma/calendario.toml`: fechas, días de clase y excepciones;
+- `ediciones/2026-2/cronograma/calendario.toml`: fechas, días de clase, excepciones y visibilidad de la columna «Sesión»;
 - `ediciones/2026-2/cronograma/contenidos.toml`: semanas, sesiones, temas, lecturas y actividades;
 - `ediciones/2026-2/operacion/estado.toml`: estado inicial, próxima sesión y aviso posterior a clase;
 - `ediciones/2026-2/operacion/bienvenida.toml`: contenido del correo inicial;

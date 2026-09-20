@@ -17,7 +17,7 @@ Orquesta el flujo completo. `python scripts/build.py --clean` elimina únicament
 
 ### `cronograma.py`
 
-Valida calendario, contenidos y claves BibTeX y genera `build/cronograma-contenido.tex`. Normalmente lo llama `build.py`.
+Valida calendario, contenidos y claves BibTeX y genera `build/cronograma-contenido.tex`. La opción `mostrar_sesion` de `calendario.toml` permite incluir u ocultar la columna «Sesión». Normalmente lo llama `build.py`.
 
 ```bash
 python scripts/cronograma.py
