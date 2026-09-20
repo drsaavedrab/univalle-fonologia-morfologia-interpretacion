@@ -2,38 +2,273 @@
 # CONTENIDOS ACADÉMICOS DEL CRONOGRAMA
 # ============================================================
 #
-# Cada fila se vincula con la semana y las sesiones calculadas
-# por calendario.toml. Las claves bibliográficas deben existir
-# en bibliografia/referencias.bib.
+# Cada fila se vincula con la semana y la sesión calculadas desde
+# calendario.toml. Las claves bibliográficas existen en
+# bibliografia/referencias.bib.
 
 [[filas]]
 semana = 1
 sesiones = ["I"]
-tema = "Presentación del curso."
-actividad = "Encuadre inicial."
+tema = "Sin sesión programada."
+actividad = "N/A."
+sin_lectura = "asignada"
+
+[[filas]]
+semana = 2
+sesiones = ["I"]
+tema = "Presentación, programa y acuerdos."
+actividad = "Presentación, socialización del programa y acuerdos de curso."
+sin_lectura = "asignada"
+
+[[filas]]
+semana = 3
+sesiones = ["I"]
+tema = "Fonética."
+actividad = "Introducción a la fonética general y de lenguas orales y de señas en particular."
 
 [[filas.lecturas]]
 categoria = "obligatoria"
-clave = "referencia-pendiente"
+clave = "baker2016linguistics"
+detalle = "cap.~10"
 
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "pfau2012"
+detalle = "cap.~2"
 
 [[filas]]
-semana = 1
-sesiones = ["II"]
-tema = "Primer contenido del curso."
-actividad = "Actividad inicial."
-sin_lectura = "adicional"
+semana = 4
+sesiones = ["I"]
+tema = "La estructura interna de las palabras y las señas."
+actividad = "Introducción a la fonología, su objeto de estudio y unidades de análisis."
 
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~4, secs.~4.1--4.4"
 
-# Ejemplo de una fila que reúne dos sesiones:
-#
-# [[filas]]
-# semana = 2
-# sesiones = ["I", "II"]
-# tema = "Tema de la semana."
-# actividad = "Trabajo correspondiente."
-#
-# [[filas.lecturas]]
-# categoria = "complementaria"
-# clave = "apellido2026"
-# detalle = "cap.~1, pp.~1--20"
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~11, sec.~11.1"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~2, cap.~1, secs.~1.0--1.1"
+
+[[filas]]
+semana = 5
+sesiones = ["I"]
+tema = "Los parámetros formacionales."
+actividad = "Exploración a las unidades de análisis fonológico básicas para las lenguas de señas."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~11, secs.~11.2--11.6"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~2, cap.~1, secs.~1.1.1--1.3.2"
+
+[[filas]]
+semana = 6
+sesiones = ["I"]
+tema = "Los tipos de señas."
+actividad = "Exploración a tipos de señas según su modalidad y su naturaleza fonológica."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~4, secs.~4.6--4.7"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "battison1977lexical"
+detalle = "cap.~1, secs.~1.1--1.5"
+
+[[filas]]
+semana = 7
+sesiones = ["I"]
+tema = "Restricciones y procesos fonológicos."
+actividad = "Exploración en torno a las restricciones y los procesos fonológicos."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~4, secs.~4.8 y 4.11"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~11, sec.~11.8"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~2, cap.~3"
+
+[[filas]]
+semana = 8
+sesiones = ["I"]
+tema = "Iconicidad y fonología."
+actividad = "Discusión y análisis de la iconicidad y su rol en la fonología/morfología."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~11, sec.~11.9"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "brentari2019"
+detalle = "cap.~3"
+
+[[filas]]
+semana = 9
+sesiones = ["I"]
+tema = "Morfología: introducción."
+actividad = "Introducción a la morfología, su objeto de estudio y unidades de análisis."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "mccabe2011"
+detalle = "cap.~4, sec.~4.1"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~5, secs.~5.1--5.2"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~9, sec.~9.2"
+
+[[filas]]
+semana = 10
+sesiones = ["I"]
+tema = "Morfología: flexión."
+actividad = "Exploración a la relación morfológica de la flexión en lenguas orales y de señas."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~5, sec.~5.4"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~9, sec.~9.5"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~4, caps.~3--4"
+
+[[filas]]
+semana = 11
+sesiones = ["I"]
+tema = "Simposio Internacional de Encuentros Interlingüísticos e Intrculturales."
+actividad = "Participación en el Simposio."
+sin_lectura = "asignada"
+
+[[filas]]
+semana = 12
+sesiones = ["I"]
+tema = "Morfología productiva I: derivación, extensión y otros procesos."
+actividad = "Exploración a la relación morfológica de la derivación en lenguas orales y de señas, entre otros procesos similares."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~5, secs.~5.3.1--5.3.3"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~9, sec.~9.4"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~4, cap.~2"
+
+[[filas]]
+semana = 13
+sesiones = ["I"]
+tema = "Morfología productiva II: composición."
+actividad = "Exploración a la relación morfológica de la composición en lenguas orales y de señas."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~5, sec.~5.3.4"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~9, sec.~9.3"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~4, cap.~1"
+
+[[filas]]
+semana = 14
+sesiones = ["I"]
+tema = "Incorporación y clasificadores: introducción."
+actividad = "Análisis introductorio a la incorporación morfológica y a los clasificadores."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~9, sec.~9.6"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~5, sec.~5.3.5"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~4, cap.~5"
+
+[[filas]]
+semana = 15
+sesiones = ["I"]
+tema = "La estructura del léxico: introducción."
+actividad = "Análisis introductorio a la estructura del léxico en las lenguas orales y de señas."
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "johnston2007"
+detalle = "cap.~6"
+
+[[filas.lecturas]]
+categoria = "obligatoria"
+clave = "baker2016linguistics"
+detalle = "cap.~8"
+
+[[filas.lecturas]]
+categoria = "complementaria"
+clave = "quer2017"
+detalle = "parte~3, caps.~1--2"
+
+[[filas]]
+semana = 16
+sesiones = ["I"]
+tema = "Socialización de trabajos finales."
+actividad = "Socialización de trabajos finales."
+sin_lectura = "asignada"
+
+[[filas]]
+semana = 17
+sesiones = ["I"]
+tema = "Cierre de clase."
+actividad = "Cierre y balance final del curso."
+sin_lectura = "asignada"

@@ -2,9 +2,9 @@
 # CALENDARIO DE LA EDICIÓN
 # ============================================================
 
-# Sustituye estas fechas por el inicio y cierre oficiales.
-inicio = 2026-01-05
-fin = 2026-01-08
+# El curso se reúne ordinariamente los martes.
+inicio = 2026-08-25
+fin = 2026-12-15
 
 # Las semanas se cuentan de lunes a domingo.
 inicio_semana = "lunes"
@@ -15,17 +15,19 @@ dias_clase = ["martes"]
 # Formato breve mostrado en el cronograma.
 formato_fecha = "breve"
 
+# Muestra la columna Sesión cuando hay varias sesiones por semana.
+mostrar_sesion = false
 
 # ============================================================
 # EXCEPCIONES
 # ============================================================
-#
-# Una excepción conserva la sesión, pero cambia su modalidad
-# y añade una nota. Duplica el bloque cuando sea necesario.
-#
-# [[excepciones]]
-# fecha = 2026-11-03
-# modalidad = "semana de simposio"
-# nota = """
-  Durante esta semana no habrá actividad programada. Se asistirá al simposio. Una nota saldrá de este ejercicio.
-# """
+
+[[excepciones]]
+fecha = 2026-08-25
+modalidad = "sin clase"
+nota = "No hubo clase."
+
+[[excepciones]]
+fecha = 2026-11-03
+modalidad = "simposio"
+nota = "No habrá clase ordinaria; la actividad académica corresponde a la participación en el Simposio."
