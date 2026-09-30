@@ -10,3 +10,7 @@ El Taller 1 de `ediciones/2026-2/actividades/taller-01.tex` incorpora directamen
 
 Se compiló el Taller 1 y se cotejaron los 14 destinos distintos de sus enlaces PDF con las relaciones del DOCX original, incluidas las tres marcas temporales. Las cinco páginas de YouTube respondieron HTTP 200; los nueve destinos de Drive respondieron HTTP 401 en la comprobación sin sesión. Se conservaron los destinos originales: queda por confirmar el acceso a esos archivos con una cuenta de estudiante autorizada.
 
+
+## Actualización de enlaces institucionales
+
+Los ocho enlaces de los pares de señas se sustituyeron por los facilitados por el docente, en el orden indicado, con acceso mediante cuentas @correounivalle.edu.co. El enlace de TREN-B se corrigió con el destino específico facilitado posteriormente por el docente. La verificación inicial anterior corresponde a los enlaces del DOCX original; este se conserva sin modificar.
