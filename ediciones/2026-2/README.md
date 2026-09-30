@@ -21,3 +21,7 @@ Los datos del periodo viven aquí. Las mejoras reutilizables permanecen en `prog
 ## Privacidad
 
 No almacenes listas, correos, calificaciones, entregas ni credenciales en esta carpeta.
+
+## Taller 1
+
+`actividades/taller-01.tex` incorpora los cinco ejercicios de `actividades/fonetica-fonologia/contenido.tex` del núcleo. Ejecutar `python scripts/build.py` para generar `dist/actividades/2026-2/taller-01.pdf`. No se han añadido fechas, plazos ni criterios de evaluación al documento fuente.

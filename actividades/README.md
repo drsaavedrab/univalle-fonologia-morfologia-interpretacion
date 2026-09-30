@@ -25,3 +25,6 @@ Los datos que cambian por periodo o grupo —fecha, grupo, plazo y enlace de ent
 Las modificaciones se registran mediante commits de Git. No se crearán copias con nombres como `final`, `final-2`, `corregida` o `ultima-version`.
 
 Las entregas estudiantiles no se almacenan en el repositorio.
+## Banco disponible
+
+- `fonetica-fonologia/`: cinco ejercicios reutilizables y Word original de referencia; utilizados en el Taller 1 de 2026-2.

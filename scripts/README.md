@@ -83,3 +83,7 @@ Con `--clean --apply`, los sobrantes se mueven a la ruta `archivo` de `publicaci
 ## Seguridad
 
 Las credenciales de rclone nunca se guardan en Git. Solo se publican archivos enumerados en `publicacion.json`. Los borradores deben revisarse y copiarse manualmente al cliente de correo.
+
+## Actividades de la edición
+
+`build.py` también compila los documentos `.tex` de `ediciones/<edicion-activa>/actividades/`, desde `programa/` como los documentos generales. Cada documento debe incluir las consignas del banco mediante `\input`, sin duplicarlas. Sus auxiliares quedan en `build/actividades/<periodo>/<nombre>/` y sus PDF en `dist/actividades/<periodo>/<nombre>.pdf`. Se copian a `dist/` solo después de compilar satisfactoriamente todos los documentos.

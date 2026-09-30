@@ -94,15 +94,15 @@ def generate_sources() -> None:
     correos.generar()
 
 
-def compile_document(document: str) -> Path:
+def compile_document(document: str, source_file: Path | None = None) -> Path:
     """Compila un documento y devuelve la ruta del PDF producido."""
-    source_file = PROGRAM_DIR / f"{document}.tex"
+    source_file = source_file or PROGRAM_DIR / f"{document}.tex"
     # Cada documento conserva sus auxiliares en un subdirectorio
     # independiente. Esto evita colisiones y archivos .aux corruptos
     # al compilar varios documentos consecutivamente en Windows.
     document_build_dir = BUILD_DIR / document
     document_build_dir.mkdir(parents=True, exist_ok=True)
-    generated_pdf = document_build_dir / f"{document}.pdf"
+    generated_pdf = document_build_dir / f"{source_file.stem}.pdf"
     if not source_file.is_file():
         raise SystemExit(f"Error: no existe {source_file}")
 
@@ -111,7 +111,8 @@ def compile_document(document: str) -> Path:
         [
             "latexmk", "-pdf", "-interaction=nonstopmode",
             "-halt-on-error", "-file-line-error",
-            f"-outdir=../build/{document}", source_file.name,
+            f"-outdir=../build/{document}",
+            os.path.relpath(source_file, PROGRAM_DIR),
         ],
         cwd=PROGRAM_DIR,
         check=True,
@@ -126,14 +127,16 @@ def publish_locally(generated_documents: dict[str, Path]) -> None:
     temporary_files: dict[str, Path] = {}
     try:
         for document, generated_pdf in generated_documents.items():
-            temporary_pdf = DIST_DIR / f".{document}.pdf.tmp"
+            destination = DIST_DIR / f"{document}.pdf"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            temporary_pdf = destination.with_name(f".{destination.name}.tmp")
             shutil.copyfile(generated_pdf, temporary_pdf)
             temporary_files[document] = temporary_pdf
 
         for document, temporary_pdf in temporary_files.items():
             destination_pdf = DIST_DIR / f"{document}.pdf"
             temporary_pdf.replace(destination_pdf)
-            print(f"Publicado localmente: dist/{destination_pdf.name}")
+            print(f"Publicado localmente: {destination_pdf.relative_to(REPO_ROOT)}")
     finally:
         for temporary_pdf in temporary_files.values():
             if temporary_pdf.exists():
@@ -155,11 +158,18 @@ def main() -> None:
     for document in DOCUMENTS:
         generated_documents[document] = compile_document(document)
 
+    # Las actividades pertenecen a la edición; sus consignas viven en el banco.
+    edition = cronograma.leer_edicion_activa()
+    activities_dir = REPO_ROOT / "ediciones" / edition / "actividades"
+    for source in sorted(activities_dir.glob("*.tex")):
+        document = f"actividades/{edition}/{source.stem}"
+        generated_documents[document] = compile_document(document, source)
+
     publish_locally(generated_documents)
 
     print("\nCompilación completada correctamente.")
     print("Entregables:")
-    for document in DOCUMENTS:
+    for document in generated_documents:
         print(f"  dist/{document}.pdf")
     print("Borrador operativo:")
     print("  build/correos/bienvenida.txt")
